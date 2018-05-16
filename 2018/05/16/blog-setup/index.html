@@ -3,22 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>build-blog | Peithon&#39;s Blog</title>
+  <title>CentOS7+Hexo+Github博客简单搭建 | Peithon&#39;s Blog</title>
 
   <!-- keywords -->
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Hexo是一款基于Node.js的快速，简单而强大的博客框架。我们可以使用Markdown（或其他语言）编写文章，可以方便的生成静态网页托管在GitHub上。 下面是我自己的博客搭建的基本流程，不包含主题美化 搭建步骤1.安装Nodejs# yum -y install nodejs # node -v //检查版本 v6.14.0 2.安装git(已安装可以跳过)# yum -y install">
+<meta name="keywords" content="Hexo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="build-blog">
-<meta property="og:url" content="http://yoursite.com/2018/05/16/build-blog/index.html">
+<meta property="og:title" content="CentOS7+Hexo+Github博客简单搭建">
+<meta property="og:url" content="http://yoursite.com/2018/05/16/blog-setup/index.html">
 <meta property="og:site_name" content="Peithon&#39;s Blog">
 <meta property="og:description" content="Hexo是一款基于Node.js的快速，简单而强大的博客框架。我们可以使用Markdown（或其他语言）编写文章，可以方便的生成静态网页托管在GitHub上。 下面是我自己的博客搭建的基本流程，不包含主题美化 搭建步骤1.安装Nodejs# yum -y install nodejs # node -v //检查版本 v6.14.0 2.安装git(已安装可以跳过)# yum -y install">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-16T13:24:46.261Z">
+<meta property="og:updated_time" content="2018-05-16T13:40:56.266Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="build-blog">
+<meta name="twitter:title" content="CentOS7+Hexo+Github博客简单搭建">
 <meta name="twitter:description" content="Hexo是一款基于Node.js的快速，简单而强大的博客框架。我们可以使用Markdown（或其他语言）编写文章，可以方便的生成静态网页托管在GitHub上。 下面是我自己的博客搭建的基本流程，不包含主题美化 搭建步骤1.安装Nodejs# yum -y install nodejs # node -v //检查版本 v6.14.0 2.安装git(已安装可以跳过)# yum -y install">
   
     <link rel="alternative" href="/atom.xml" title="Peithon&#39;s Blog" type="application/atom+xml">
@@ -113,7 +114,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						
+						<a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a>
 					</div>
 				</section>
 				
@@ -169,11 +170,11 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-build-blog" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-blog-setup" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/05/16/build-blog/" class="article-date">
-  	<time datetime="2018-05-16T13:22:37.000Z" itemprop="datePublished">2018-05-16</time>
+      <a href="/2018/05/16/blog-setup/" class="article-date">
+  	<time datetime="2018-05-16T13:35:30.000Z" itemprop="datePublished">2018-05-16</time>
 </a>
     </div>
   
@@ -186,7 +187,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      build-blog
+      CentOS7+Hexo+Github博客简单搭建
       
     </h1>
   
@@ -195,6 +196,10 @@
       
       <div class="article-info article-info-post">
         
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/">Hexo</a></li></ul>
+	</div>
+
         
 
         
@@ -252,7 +257,8 @@ deploy:
 
  当博客中有图片时，若是很少的话可以存放在source文件中，但是显然不合理，图片会占据大量的存储的空间
 我们就需要找一个地方存放这些图片，然后通过外部链接取得这些图片，图床重要的是稳定速度快，所以我个人选了七牛云
-</code></pre><h2 id="14-更换主题"><a href="#14-更换主题" class="headerlink" title="14.更换主题"></a>14.更换主题</h2><pre><code>#我使用的是smackdown主题
+</code></pre><h2 id="14-更换主题"><a href="#14-更换主题" class="headerlink" title="14.更换主题"></a>14.更换主题</h2><p><a href="https://hexo.io/themes/" target="_blank" rel="noopener">主题下载</a></p>
+<pre><code>#我使用的是smackdown主题
 1).从官网下载自己喜欢的主题，然后解压之后放在博客目录的themes里
 2).在博客目录的```_config.yml```文件中可以对网站信息进行修改,将```theme: landscape```修改成 ```theme: smackdown```(自己主题文件名),注意冒号后面有空格
 3).smackdown里的_config.yml文件是主题的配置文件，可以对主题进行修改
@@ -262,7 +268,11 @@ deploy:
      # hexo d
 </code></pre><h2 id="15-发布文章"><a href="#15-发布文章" class="headerlink" title="15.发布文章"></a>15.发布文章</h2><pre><code># hexo n &quot;文章名字&quot; 
 </code></pre><p>在blog根目录下的source文件夹中的_post文件夹中多了一个<code>文章名字.md</code>文件</p>
-<p>然后将写好的md文件内容复制过去，现在就可以开始个人博客之旅了</p>
+<p>然后将写好的md文件内容复制过去,回到博客目录，部署博客</p>
+<pre><code># hexo clean
+# hexo g
+# hexo d
+</code></pre><p>现在就可以开始个人博客之旅了</p>
 <p>至此博客基本就搭建完毕</p>
 
       
@@ -271,21 +281,11 @@ deploy:
   </div>
   
     
-<nav id="article-nav">
-  
-  
-    <a href="/2018/05/16/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
-      <strong class="article-nav-caption">&gt;</strong>
-    </a>
-  
-</nav>
-
   
 </article>
 
 
-<div class="ds-share share" data-thread-key="build-blog" data-title="build-blog" data-url="http://yoursite.com/2018/05/16/build-blog/"  data-images="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" data-content="build-blog">
+<div class="ds-share share" data-thread-key="blog-setup" data-title="CentOS7+Hexo+Github博客简单搭建" data-url="http://yoursite.com/2018/05/16/blog-setup/"  data-images="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" data-content="CentOS7+Hexo+Github博客简单搭建">
     <div class="ds-share-inline">
       <ul  class="ds-share-icons-16">
       	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>

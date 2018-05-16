@@ -112,7 +112,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						
+						<a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a>
 					</div>
 				</section>
 				
@@ -170,11 +170,11 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-build-blog" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-blog-setup" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/05/16/build-blog/" class="article-date">
-  	<time datetime="2018-05-16T13:22:37.000Z" itemprop="datePublished">2018-05-16</time>
+      <a href="/2018/05/16/blog-setup/" class="article-date">
+  	<time datetime="2018-05-16T13:35:30.000Z" itemprop="datePublished">2018-05-16</time>
 </a>
     </div>
   
@@ -187,8 +187,8 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/16/build-blog/">
-        build-blog
+      <a class="article-title" href="/2018/05/16/blog-setup/">
+        CentOS7+Hexo+Github博客简单搭建
         
       </a>
     </h1>
@@ -247,7 +247,8 @@ deploy:
 
  当博客中有图片时，若是很少的话可以存放在source文件中，但是显然不合理，图片会占据大量的存储的空间
 我们就需要找一个地方存放这些图片，然后通过外部链接取得这些图片，图床重要的是稳定速度快，所以我个人选了七牛云
-</code></pre><h2 id="14-更换主题"><a href="#14-更换主题" class="headerlink" title="14.更换主题"></a>14.更换主题</h2><pre><code>#我使用的是smackdown主题
+</code></pre><h2 id="14-更换主题"><a href="#14-更换主题" class="headerlink" title="14.更换主题"></a>14.更换主题</h2><p><a href="https://hexo.io/themes/" target="_blank" rel="noopener">主题下载</a></p>
+<pre><code>#我使用的是smackdown主题
 1).从官网下载自己喜欢的主题，然后解压之后放在博客目录的themes里
 2).在博客目录的```_config.yml```文件中可以对网站信息进行修改,将```theme: landscape```修改成 ```theme: smackdown```(自己主题文件名),注意冒号后面有空格
 3).smackdown里的_config.yml文件是主题的配置文件，可以对主题进行修改
@@ -257,7 +258,11 @@ deploy:
      # hexo d
 </code></pre><h2 id="15-发布文章"><a href="#15-发布文章" class="headerlink" title="15.发布文章"></a>15.发布文章</h2><pre><code># hexo n &quot;文章名字&quot; 
 </code></pre><p>在blog根目录下的source文件夹中的_post文件夹中多了一个<code>文章名字.md</code>文件</p>
-<p>然后将写好的md文件内容复制过去，现在就可以开始个人博客之旅了</p>
+<p>然后将写好的md文件内容复制过去,回到博客目录，部署博客</p>
+<pre><code># hexo clean
+# hexo g
+# hexo d
+</code></pre><p>现在就可以开始个人博客之旅了</p>
 <p>至此博客基本就搭建完毕</p>
 
       
@@ -266,69 +271,10 @@ deploy:
     <div class="article-info article-info-index">
       
       
-      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/">Hexo</a></li></ul>
+	</div>
 
-      
-      <div class="clearfix"></div>
-    </div>
-      
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/05/16/hello-world/" class="article-date">
-  	<time datetime="2018-05-16T05:58:07.039Z" itemprop="datePublished">2018-05-16</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/16/hello-world/">
-        Hello World
-        
-      </a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
       
 
       
