@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="Peithon&#39;s Blog">
 <meta property="og:description" content="Hexo是一款基于Node.js的快速，简单而强大的博客框架。我们可以使用Markdown（或其他语言）编写文章，可以方便的生成静态网页托管在GitHub上。 下面是我自己的博客搭建的基本流程，不包含主题美化 搭建步骤1.安装Nodejs# yum -y install nodejs # node -v //检查版本 v6.14.0 2.安装git(已安装可以跳过)# yum -y install">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-17T03:20:26.416Z">
+<meta property="og:updated_time" content="2018-05-17T03:25:16.783Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CentOS7+Hexo+Github博客简单搭建">
 <meta name="twitter:description" content="Hexo是一款基于Node.js的快速，简单而强大的博客框架。我们可以使用Markdown（或其他语言）编写文章，可以方便的生成静态网页托管在GitHub上。 下面是我自己的博客搭建的基本流程，不包含主题美化 搭建步骤1.安装Nodejs# yum -y install nodejs # node -v //检查版本 v6.14.0 2.安装git(已安装可以跳过)# yum -y install">
@@ -267,7 +267,7 @@ deploy:
      # hexo d
 </code></pre><h2 id="15-发布文章"><a href="#15-发布文章" class="headerlink" title="15.发布文章"></a>15.发布文章</h2><pre><code># hexo n &quot;文章名字&quot; 
 </code></pre><p>在blog根目录下的source文件夹中的_post文件夹中多了一个<code>文章名字.md</code>文件</p>
-<p>然后将写好的md文件内容复制过去,回到博客目录，部署博客</p>
+<p>然后将写好的md文件内容复制到刚生成的md文件中,回到博客目录，部署博客</p>
 <pre><code># hexo clean
 # hexo g
 # hexo d
