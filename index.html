@@ -237,7 +237,7 @@ deploy:
 <h2 id="9-安装git部署插件"><a href="#9-安装git部署插件" class="headerlink" title="9.安装git部署插件"></a>9.安装git部署插件</h2><pre><code># npm install hexo-deployer-git --save
 </code></pre><h2 id="10-生成SSH密钥"><a href="#10-生成SSH密钥" class="headerlink" title="10.生成SSH密钥"></a>10.生成SSH密钥</h2><pre><code># cd ~/. ssh #检查本机已存在的ssh密钥
 # ssh-keygen -t rsa -C &quot;注册github账号的邮箱地址&quot;
-</code></pre><p>然后连续3次回车，最终会生成两个个文件在<code>/root/.ssh</code>下，打开目录，找到<code>.ssh/id_rsa.pub</code>文件，使用<code>cat id_ras.pub</code>查看密钥内容，并将内容复制，打开你的github主页，进入个人设置-&gt;SSH and GPG keys-&gt;New SSH key,将刚复制的内容粘贴到key那里，title随便填，保存</p>
+</code></pre><p>然后连续3次回车，最终会生成两个文件在<code>/root/.ssh</code>下，打开目录，找到<code>.ssh/id_rsa.pub</code>文件，使用<code>cat id_ras.pub</code>查看密钥内容，并将内容复制，打开你的github主页，进入个人设置-&gt;SSH and GPG keys-&gt;New SSH key,将刚复制的内容粘贴到key那里，title随便填，保存</p>
 <h2 id="11-进行git全局配置"><a href="#11-进行git全局配置" class="headerlink" title="11.进行git全局配置"></a>11.进行git全局配置</h2><pre><code># git config --global user.name &quot;github用户名&quot;
 # git config --global user.email &quot;注册github的邮箱&quot;
 </code></pre><h2 id="12-部署博客到github上"><a href="#12-部署博客到github上" class="headerlink" title="12.部署博客到github上"></a>12.部署博客到github上</h2><pre><code># hexo clean //清除缓存，若是网页正常情况下可以忽略这条命令
