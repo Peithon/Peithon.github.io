@@ -20,9 +20,12 @@
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/1.png">
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/2.png">
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/3.png">
+<meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/4.png">
+<meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/5.png">
+<meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/deploy_net6.png">
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/7.png">
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/deploy_net8.png">
-<meta property="og:updated_time" content="2018-05-20T05:37:05.993Z">
+<meta property="og:updated_time" content="2018-05-20T05:43:52.621Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CentOS7网络配置问题">
 <meta name="twitter:description" content="在虚拟机中安装完CentOS7之后，本来网络配置是不麻烦的，可是偏偏出现了问题，所以把这次虐心的过程记录下来。">
@@ -281,10 +284,19 @@ PREFIX=32
 GATEWAY=10.203.87.254
 IPV6_PEERDNS=yes
 IPV6_PEERROUTES=yes
-</code></pre><p>主要改<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">命令模式下输入```:set nu```显示所有行数</span><br><span class="line"></span><br><span class="line">### 3.修改DNS配置</span><br><span class="line"></span><br><span class="line">	# vi /etc/resolv.conf</span><br><span class="line">内容：</span><br><span class="line"> </span><br><span class="line">	nameserver 114.114.114.114</span><br><span class="line">	nameserver 8.8.8.8</span><br><span class="line"></span><br><span class="line">### 4.重启网络服务</span><br><span class="line"></span><br><span class="line">	# /etc/init.d/network restart</span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line">	# systemctl restart network.service</span><br><span class="line"></span><br><span class="line">然后ping www.baidu.com网络不通</span><br><span class="line"></span><br><span class="line">## 问题及解决办法</span><br><span class="line"></span><br><span class="line">### 发现的现象</span><br><span class="line"></span><br><span class="line">1).使用命令查看```ifconfig ifcfg-ens33</span><br></pre></td></tr></table></figure></p>
+</code></pre><p>主要改BOOTPROTO=static和ONBOOT=yes</p>
+<h3 id="3-修改DNS配置"><a href="#3-修改DNS配置" class="headerlink" title="3.修改DNS配置"></a>3.修改DNS配置</h3><pre><code># vi /etc/resolv.conf
+</code></pre><p>内容：</p>
+<pre><code>nameserver 114.114.114.114
+nameserver 8.8.8.8
+</code></pre><h3 id="4-重启网络服务"><a href="#4-重启网络服务" class="headerlink" title="4.重启网络服务"></a>4.重启网络服务</h3><pre><code># /etc/init.d/network restart
+</code></pre><p>或者</p>
+<pre><code># systemctl restart network.service
+</code></pre><p>然后ping <a href="http://www.baidu.com网络不通" target="_blank" rel="noopener">www.baidu.com网络不通</a></p>
+<h2 id="问题及解决办法"><a href="#问题及解决办法" class="headerlink" title="问题及解决办法"></a>问题及解决办法</h2><h3 id="发现的现象"><a href="#发现的现象" class="headerlink" title="发现的现象"></a>发现的现象</h3><p>1).使用命令ifconfig ifcfg-ens33查看</p>
 <pre><code>ifcfg-ens33：error fetching interface information: Device not found
 </code></pre><p>2).ifcfg-ens33配置内容</p>
-<p>重启网络后 BOOTPROTO=static 变成了 BOOTPROTO=none</p>
+<p>重启网络后,BOOTPROTO=static 变成了 BOOTPROTO=none</p>
 <p>3).ping网关 不通</p>
 <p>4).ip addr</p>
 <pre><code>ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP qlen 1000
@@ -294,7 +306,30 @@ IPV6_PEERROUTES=yes
     inet6 fe80::d8c2:956:a6a8:4b57/64 scope link 
        valid_lft forever preferred_lft forever
 </code></pre><h3 id="解决过程"><a href="#解决过程" class="headerlink" title="解决过程"></a>解决过程</h3><h4 id="1-执行命令cat-proc-net-dev查看网口状况，发现是存在ens33的"><a href="#1-执行命令cat-proc-net-dev查看网口状况，发现是存在ens33的" class="headerlink" title="1.执行命令cat /proc/net/dev查看网口状况，发现是存在ens33的"></a>1.执行命令cat /proc/net/dev查看网口状况，发现是存在ens33的</h4><p><img src="http://p8urkh0xe.bkt.clouddn.com/3.png" alt=""></p>
-<h4 id="2-查看arp缓冲区"><a href="#2-查看arp缓冲区" class="headerlink" title="2.查看arp缓冲区"></a>2.查看arp缓冲区</h4><p>执行命令<figure class="highlight plain"><figcaption><span>-nv```查看arp缓冲区条目</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">![](http://p8urkh0xe.bkt.clouddn.com/4.png)</span><br><span class="line"></span><br><span class="line">	Address：主机的IP地址</span><br><span class="line">	Hwtype：主机的硬件类型</span><br><span class="line">	Hwaddress：主机的硬件地址</span><br><span class="line"></span><br><span class="line">发现没有mac地址,arp表记录了ip地址与真实主机mac地址的对应关系，于是本机给网关发送的网络数据包实际上并没有发给真实的网关，这就是ping不通的原因了</span><br><span class="line"></span><br><span class="line">#### 3.删除arp 条目</span><br><span class="line"></span><br><span class="line">将```10.03.87.254```的ARP缓存删除</span><br><span class="line"></span><br><span class="line">	# arp -d 10.203.87.254</span><br><span class="line"></span><br><span class="line">#### 4.添加arp 条目</span><br><span class="line"></span><br><span class="line">在能上网的主机上找到网关的mac地址，添加一个arp条目</span><br><span class="line"></span><br><span class="line">	# arp -s 10.203.87.254 00:1a:a9:15:4e:bd</span><br><span class="line">	# apr -f     //刷新</span><br><span class="line"></span><br><span class="line">![](http://p8urkh0xe.bkt.clouddn.com/5.png)</span><br><span class="line"></span><br><span class="line">	flags mask 的值是C代表这个绑定是保存在缓冲里的</span><br><span class="line">	flags mask 的值是CM表示静态网关,可以防止ARP欺骗</span><br><span class="line">		打开或建立/etc/ethers，添加内容：</span><br><span class="line">			10.203.87.254 00:1a:a9:15:4e:bd</span><br><span class="line">		这样就可以实现静态网关了</span><br><span class="line"></span><br><span class="line">如果不和局域网通信，可以把arp解析关掉</span><br><span class="line"></span><br><span class="line">	# ifconfig ens33 -arp</span><br><span class="line"></span><br><span class="line">然后发现当我ping一次网关,网关的mac地址就又没了,看来这也不是问题所在，最后在VMware上解决了问题</span><br><span class="line"></span><br><span class="line">#### 5.解决方法</span><br><span class="line"></span><br><span class="line">1).在VMare上打开编辑-&gt;虚拟网络编辑器-&gt;更改设置，将桥接模式的```桥接到：自动```改成指定网卡</span><br><span class="line"></span><br><span class="line">![](http://p8urkh0xe.bkt.clouddn.com/deploy_net6.png)</span><br><span class="line"></span><br><span class="line">应用，确定</span><br><span class="line"></span><br><span class="line">2).回到CentOS7里，编辑```/etc/sysconfig/network-scripts/ifcfg-ens33```,将BOOTPROTO的```none```改成```static</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-查看arp缓冲区"><a href="#2-查看arp缓冲区" class="headerlink" title="2.查看arp缓冲区"></a>2.查看arp缓冲区</h4><p>执行命令arp -nv查看arp缓冲区条目</p>
+<p><img src="http://p8urkh0xe.bkt.clouddn.com/4.png" alt=""></p>
+<pre><code>Address：主机的IP地址
+Hwtype：主机的硬件类型
+Hwaddress：主机的硬件地址
+</code></pre><p>发现没有mac地址,arp表记录了ip地址与真实主机mac地址的对应关系，于是本机给网关发送的网络数据包实际上并没有发给真实的网关，这就是ping不通的原因了</p>
+<h4 id="3-删除arp-条目"><a href="#3-删除arp-条目" class="headerlink" title="3.删除arp 条目"></a>3.删除arp 条目</h4><p>将10.03.87.254的ARP缓存删除</p>
+<pre><code># arp -d 10.203.87.254
+</code></pre><h4 id="4-添加arp-条目"><a href="#4-添加arp-条目" class="headerlink" title="4.添加arp 条目"></a>4.添加arp 条目</h4><p>在能上网的主机上找到网关的mac地址，添加一个arp条目</p>
+<pre><code># arp -s 10.203.87.254 00:1a:a9:15:4e:bd
+# apr -f     //刷新
+</code></pre><p><img src="http://p8urkh0xe.bkt.clouddn.com/5.png" alt=""></p>
+<pre><code>flags mask 的值是C代表这个绑定是保存在缓冲里的
+flags mask 的值是CM表示静态网关,可以防止ARP欺骗
+    打开或建立/etc/ethers，添加内容：
+        10.203.87.254 00:1a:a9:15:4e:bd
+    这样就可以实现静态网关了
+</code></pre><p>如果不和局域网通信，可以把arp解析关掉</p>
+<pre><code># ifconfig ens33 -arp
+</code></pre><p>然后发现当我ping一次网关,网关的mac地址就又没了,看来这也不是问题所在，最后在VMware上解决了问题</p>
+<h4 id="5-解决方法"><a href="#5-解决方法" class="headerlink" title="5.解决方法"></a>5.解决方法</h4><p>1).在VMare上打开编辑-&gt;虚拟网络编辑器-&gt;更改设置，将桥接模式的”桥接到：自动”改成指定网卡</p>
+<p><img src="http://p8urkh0xe.bkt.clouddn.com/deploy_net6.png" alt=""></p>
+<p>应用，确定</p>
+<p>2).回到CentOS7里，编辑”/etc/sysconfig/network-scripts/ifcfg-ens33”,将BOOTPROTO的”none”改成”static”</p>
 <p><img src="http://p8urkh0xe.bkt.clouddn.com/7.png" alt=""></p>
 <p>3).重启网络</p>
 <pre><code># systemctl restart network.service
