@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>deploy_net | Peithon&#39;s Blog</title>
+
+  <!-- keywords -->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在虚拟机中安装完CentOS7之后，本来网络配置是不麻烦的，可是偏偏出现了问题，所以把这次虐心的过程记录下来。">
+<meta name="keywords" content="Centos7网络配置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="deploy_net">
+<meta property="og:url" content="http://yoursite.com/2018/05/20/deploy-net/index.html">
+<meta property="og:site_name" content="Peithon&#39;s Blog">
+<meta property="og:description" content="在虚拟机中安装完CentOS7之后，本来网络配置是不麻烦的，可是偏偏出现了问题，所以把这次虐心的过程记录下来。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/1.png">
+<meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/7.png">
+<meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/deploy_net8.png">
+<meta property="og:updated_time" content="2018-05-20T05:24:14.314Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="deploy_net">
+<meta name="twitter:description" content="在虚拟机中安装完CentOS7之后，本来网络配置是不麻烦的，可是偏偏出现了问题，所以把这次虐心的过程记录下来。">
+<meta name="twitter:image" content="http://p8urkh0xe.bkt.clouddn.com/1.png">
+  
+    <link rel="alternative" href="/atom.xml" title="Peithon&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://p8urkh0xe.bkt.clouddn.com/touxiang.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+  
+
+  <script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+  
+      <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("YV6LWh5W8UQ3bQKoo628fNVK-gzGzoHsz", "SnDWsQ8dkIu3YguxR8PB7ok5");</script>
+<script src="/js/Counter.js"></script>
+
+  
+</head>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://p8urkh0xe.bkt.clouddn.com/touxiang.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Peithon</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Centos7网络配置/" style="font-size: 10px;">Centos7网络配置</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://hexo.io/">hexo官网</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Peithon</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://p8urkh0xe.bkt.clouddn.com/touxiang.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Peithon</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-deploy-net" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/05/20/deploy-net/" class="article-date">
+  	<time datetime="2018-05-20T04:28:12.000Z" itemprop="datePublished">2018-05-20</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      deploy_net
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Centos7网络配置/">Centos7网络配置</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Linux/">Linux</a>
+	</div>
+
+
+        
+          
+<div class="counter-tag counter">
+    <span id="/2018/05/20/deploy-net/" class="leancloud_visitors post-title-link"
+          style="font-size: 12px" data-flag-title="deploy_net">
+         &nbsp;
+        view
+    </span>
+</div>
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在虚拟机中安装完CentOS7之后，本来网络配置是不麻烦的，可是偏偏出现了问题，所以把这次虐心的过程记录下来。<br><a id="more"></a></p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>虚拟机: VMware Workstation 14</p>
+<p>镜像: CentOS-7-x86_64-DVD-1611.iso</p>
+<p>网络适配器: 桥接模式(自动)</p>
+<h2 id="网络配置"><a href="#网络配置" class="headerlink" title="网络配置"></a>网络配置</h2><h3 id="1-使用NetworkManager配置"><a href="#1-使用NetworkManager配置" class="headerlink" title="1.使用NetworkManager配置"></a>1.使用NetworkManager配置</h3><pre><code># nmtui
+</code></pre><p><img src="http://p8urkh0xe.bkt.clouddn.com/1.png" alt=""></p>
+<p>以上根据自己实际情况配置，点击确定，然后返回到终端</p>
+<p>没有该工具使用<figure class="highlight plain"><figcaption><span>yum install NetworkManager-tui```下载</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 2.修改```ifcfg-ens33```配置文件</span><br><span class="line"></span><br><span class="line">	# cd /etc/sysconfig/network-scripts/</span><br><span class="line"></span><br><span class="line">![](http://p8urkh0xe.bkt.clouddn.com/2.png)</span><br><span class="line"></span><br><span class="line">	# vi ifcfg-ens33</span><br><span class="line"></span><br><span class="line">配置如下：</span><br><span class="line"></span><br><span class="line">	YPE=Ethernet</span><br><span class="line">	BOOTPROTO=static  # 静态IP</span><br><span class="line">	DEFROUTE=yes</span><br><span class="line">	IPV4_FAILURE_FATAL=yes</span><br><span class="line">	IPV6INIT=yes</span><br><span class="line">	IPV6_AUTOCONF=yes</span><br><span class="line">	IPV6_DEFROUTE=yes</span><br><span class="line">	IPV6_FAILURE_FATAL=no</span><br><span class="line">	IPV6_ADDR_GEN_MODE=stable-privacy</span><br><span class="line">	NAME=ens33</span><br><span class="line">	UUID=c0d6a6b8-de69-45ff-86ae-1b4865250a27</span><br><span class="line">	DEVICE=ens33</span><br><span class="line">	ONBOOT=yes     # 系统启动激活</span><br><span class="line">	DNS1=114.114.114.114</span><br><span class="line">	IPADDR=10.203.87.148</span><br><span class="line">	PREFIX=32</span><br><span class="line">	GATEWAY=10.203.87.254</span><br><span class="line">	IPV6_PEERDNS=yes</span><br><span class="line">	IPV6_PEERROUTES=yes</span><br><span class="line"></span><br><span class="line">主要改```BOOTPROTO=static```和```ONBOOT=yes</span><br></pre></td></tr></table></figure></p>
+<p>命令模式下输入:<figure class="highlight plain"><figcaption><span>nu```显示所有行数</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 2.修改DNS配置</span><br><span class="line"></span><br><span class="line">	# vi /etc/resolv.conf</span><br><span class="line">内容：</span><br><span class="line"> </span><br><span class="line">	nameserver 114.114.114.114</span><br><span class="line">	nameserver 8.8.8.8</span><br><span class="line"></span><br><span class="line">### 3.重启网络服务</span><br><span class="line"></span><br><span class="line">	# /etc/init.d/network restart</span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line">	# systemctl restart network.service</span><br><span class="line"></span><br><span class="line">然后ping www.baidu.com网络不通</span><br><span class="line"></span><br><span class="line">## 问题及解决办法</span><br><span class="line"></span><br><span class="line">### 发现的现象</span><br><span class="line"></span><br><span class="line">1).使用命令查看```ifconfig ifcfg-ens33</span><br></pre></td></tr></table></figure></p>
+<pre><code>ifcfg-ens33：error fetching interface information: Device not found
+</code></pre><p>2).ifcfg-ens33配置内容</p>
+<p>重启网络后 BOOTPROTO=static 变成了 BOOTPROTO=none</p>
+<p>3).ping网关 不通</p>
+<p>4).ip addr</p>
+<pre><code>ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP qlen 1000
+    link/ether 00:0c:29:ff:bd:0c brd ff:ff:ff:ff:ff:ff
+    inet 10.203.87.148/32 brd 10.203.87.148 scope global ens33
+       valid_lft forever preferred_lft forever
+    inet6 fe80::d8c2:956:a6a8:4b57/64 scope link 
+       valid_lft forever preferred_lft forever
+</code></pre><h3 id="解决过程"><a href="#解决过程" class="headerlink" title="解决过程"></a>解决过程</h3><h4 id="1-执行命令"><a href="#1-执行命令" class="headerlink" title="1.执行命令"></a>1.执行命令<figure class="highlight plain"><figcaption><span>/proc/net/dev```网口状况，发现是存在ens33的</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">![](http://p8urkh0xe.bkt.clouddn.com/3.png)</span><br><span class="line"></span><br><span class="line">#### 2.查看arp缓冲区</span><br><span class="line"></span><br><span class="line">执行命令```arp -nv```查看arp缓冲区条目</span><br><span class="line"></span><br><span class="line">![](http://p8urkh0xe.bkt.clouddn.com/4.png)</span><br><span class="line"></span><br><span class="line">	Address：主机的IP地址</span><br><span class="line">	Hwtype：主机的硬件类型</span><br><span class="line">	Hwaddress：主机的硬件地址</span><br><span class="line"></span><br><span class="line">发现没有mac地址,arp表记录了ip地址与真实主机mac地址的对应关系，于是本机给网关发送的网络数据包实际上并没有发给真实的网关，这就是ping不通的原因了</span><br><span class="line"></span><br><span class="line">#### 3.删除arp 条目</span><br><span class="line"></span><br><span class="line">将```10.03.87.254```的ARP缓存删除</span><br><span class="line"></span><br><span class="line">	# arp -d 10.203.87.254</span><br><span class="line"></span><br><span class="line">#### 4.添加arp 条目</span><br><span class="line"></span><br><span class="line">在能上网的主机上找到网关的mac地址，添加一个arp条目</span><br><span class="line"></span><br><span class="line">	# arp -s 10.203.87.254 00:1a:a9:15:4e:bd</span><br><span class="line">    # apr -f     //刷新</span><br><span class="line"></span><br><span class="line">![](http://p8urkh0xe.bkt.clouddn.com/5.png)</span><br><span class="line"></span><br><span class="line">	flags mask 的值是C代表这个绑定是保存在缓冲里的</span><br><span class="line">	flags mask 的值是CM表示静态网关,可以防止ARP欺骗</span><br><span class="line">		打开或建立/etc/ethers，添加内容：</span><br><span class="line">			10.203.87.254 00:1a:a9:15:4e:bd</span><br><span class="line">		这样就可以实现静态网关了</span><br><span class="line"></span><br><span class="line">如果不和局域网通信，可以把arp解析关掉</span><br><span class="line"></span><br><span class="line">	# ifconfig ens33 -arp</span><br><span class="line"></span><br><span class="line">然后发现当我ping一次网关,网关的mac地址就又没了,看来这也不是问题所在，最后在VMware上解决了问题</span><br><span class="line"></span><br><span class="line">#### 5.解决方法</span><br><span class="line"></span><br><span class="line">1).在VMare上打开编辑-&gt;虚拟网络编辑器-&gt;更改设置，将桥接模式的```桥接到：自动```改成指定网卡</span><br><span class="line"></span><br><span class="line">![](http://p8urkh0xe.bkt.clouddn.com/deploy_net6.png)</span><br><span class="line"></span><br><span class="line">应用，确定</span><br><span class="line"></span><br><span class="line">2).回到CentOS7里，编辑```/etc/sysconfig/network-scripts/ifcfg-ens33```,将BOOTPROTO的```none```改成```static</span><br></pre></td></tr></table></figure></h4><p><img src="http://p8urkh0xe.bkt.clouddn.com/7.png" alt=""></p>
+<p>3).重启网络</p>
+<pre><code># systemctl restart network.service
+</code></pre><p><img src="http://p8urkh0xe.bkt.clouddn.com/deploy_net8.png" alt=""></p>
+<p>到此解决了网络不通的问题</p>
+<h4 id="6-配置ssh"><a href="#6-配置ssh" class="headerlink" title="6.配置ssh"></a>6.配置ssh</h4><p>1).安装ssh</p>
+<pre><code># yum -y install ssh
+</code></pre><p>3).启动ssh服务</p>
+<pre><code># systemctl enable sshd
+</code></pre><p>4).使用Xshell连接，连接成功</p>
+<h4 id="到此结束了此次虐心的网络配置"><a href="#到此结束了此次虐心的网络配置" class="headerlink" title="到此结束了此次虐心的网络配置"></a>到此结束了此次虐心的网络配置</h4><h3 id="未经本人允许，禁止转载"><a href="#未经本人允许，禁止转载" class="headerlink" title="*未经本人允许，禁止转载"></a>*未经本人允许，禁止转载</h3>
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/05/16/blog-setup/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">CentOS7+Hexo+Github博客简单搭建</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2018 Peithon
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/smackgg/hexo-theme-smackdown" target="_blank">Smackdown</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="/js/main.js"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
+
+
+  </div>
+</body>
+</html>
