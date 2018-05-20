@@ -25,7 +25,7 @@
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/deploy_net6.png">
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/7.png">
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/deploy_net8.png">
-<meta property="og:updated_time" content="2018-05-20T05:43:52.621Z">
+<meta property="og:updated_time" content="2018-05-20T05:49:08.925Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CentOS7网络配置问题">
 <meta name="twitter:description" content="在虚拟机中安装完CentOS7之后，本来网络配置是不麻烦的，可是偏偏出现了问题，所以把这次虐心的过程记录下来。">
@@ -259,7 +259,7 @@
 <h2 id="网络配置"><a href="#网络配置" class="headerlink" title="网络配置"></a>网络配置</h2><h3 id="1-使用NetworkManager配置"><a href="#1-使用NetworkManager配置" class="headerlink" title="1.使用NetworkManager配置"></a>1.使用NetworkManager配置</h3><pre><code># nmtui
 </code></pre><p><img src="http://p8urkh0xe.bkt.clouddn.com/1.png" alt=""></p>
 <p>以上根据自己实际情况配置，点击确定，然后返回到终端</p>
-<p>没有该工具使用使用下面语句下载:</p>
+<p>没有该工具使用下面语句安装:</p>
 <pre><code># yum -y install NetworkManager-tui
 </code></pre><h3 id="2-修改ifcfg-ens33配置文件"><a href="#2-修改ifcfg-ens33配置文件" class="headerlink" title="2.修改ifcfg-ens33配置文件"></a>2.修改ifcfg-ens33配置文件</h3><pre><code># cd /etc/sysconfig/network-scripts/
 </code></pre><p><img src="http://p8urkh0xe.bkt.clouddn.com/2.png" alt=""></p>
@@ -292,7 +292,7 @@ nameserver 8.8.8.8
 </code></pre><h3 id="4-重启网络服务"><a href="#4-重启网络服务" class="headerlink" title="4.重启网络服务"></a>4.重启网络服务</h3><pre><code># /etc/init.d/network restart
 </code></pre><p>或者</p>
 <pre><code># systemctl restart network.service
-</code></pre><p>然后ping <a href="http://www.baidu.com网络不通" target="_blank" rel="noopener">www.baidu.com网络不通</a></p>
+</code></pre><p>然后ping <a href="http://www.baidu.com，网络不通" target="_blank" rel="noopener">www.baidu.com，网络不通</a></p>
 <h2 id="问题及解决办法"><a href="#问题及解决办法" class="headerlink" title="问题及解决办法"></a>问题及解决办法</h2><h3 id="发现的现象"><a href="#发现的现象" class="headerlink" title="发现的现象"></a>发现的现象</h3><p>1).使用命令ifconfig ifcfg-ens33查看</p>
 <pre><code>ifcfg-ens33：error fetching interface information: Device not found
 </code></pre><p>2).ifcfg-ens33配置内容</p>
