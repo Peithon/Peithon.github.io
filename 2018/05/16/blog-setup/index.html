@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="Peithon&#39;s Blog">
 <meta property="og:description" content="Hexo是一款基于Node.js的快速，简单而强大的博客框架。我们可以使用Markdown（或其他语言）编写文章，可以方便的生成静态网页托管在GitHub上。 下面是我自己的博客搭建的基本流程，不包含主题美化">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-17T09:46:37.853Z">
+<meta property="og:updated_time" content="2018-05-20T17:03:27.022Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CentOS7+Hexo+Github博客简单搭建">
 <meta name="twitter:description" content="Hexo是一款基于Node.js的快速，简单而强大的博客框架。我们可以使用Markdown（或其他语言）编写文章，可以方便的生成静态网页托管在GitHub上。 下面是我自己的博客搭建的基本流程，不包含主题美化">
@@ -245,9 +245,24 @@
       
         <p>Hexo是一款基于Node.js的快速，简单而强大的博客框架。我们可以使用Markdown（或其他语言）编写文章，可以方便的生成静态网页托管在GitHub上。</p>
 <p>下面是我自己的博客搭建的基本流程，不包含主题美化<br><a id="more"></a></p>
-<h1 id="搭建步骤"><a href="#搭建步骤" class="headerlink" title="搭建步骤"></a>搭建步骤</h1><h2 id="1-安装Nodejs"><a href="#1-安装Nodejs" class="headerlink" title="1.安装Nodejs"></a>1.安装Nodejs</h2><pre><code># yum -y install nodejs
-# node -v //检查版本
-v6.14.0
+<h1 id="搭建步骤"><a href="#搭建步骤" class="headerlink" title="搭建步骤"></a>搭建步骤</h1><h2 id="1-安装Nodejs"><a href="#1-安装Nodejs" class="headerlink" title="1.安装Nodejs"></a>1.安装Nodejs</h2><p>1).下载</p>
+<pre><code># wget https://nodejs.org/dist/v9.3.0/node-v9.3.0-linux-x64.tar.xz
+</code></pre><p>2).解压</p>
+<pre><code># xz -d node-v9.3.0-linux-x64.tar.xz
+# tar -xvf node-v9.3.0-linux-x64.tar
+</code></pre><p>3).移动</p>
+<pre><code>mv  node-v9.3.0-linux-x64 node-v9.3.0
+mv  node-v9.3.0 /usr/local/node
+</code></pre><p>4).配置环境变量</p>
+<pre><code># vi /etc/profile
+# 在底部添加 PATH 变量
+export PATH=$PATH:/usr/local/node/bin
+</code></pre><p>保存退出</p>
+<p>5).使配置生效</p>
+<pre><code># source /etc/profile
+</code></pre><p>6).查看版本信息</p>
+<pre><code># node -v 
+v9.3.0
 </code></pre><h2 id="2-安装git-已安装可以跳过"><a href="#2-安装git-已安装可以跳过" class="headerlink" title="2.安装git(已安装可以跳过)"></a>2.安装git(已安装可以跳过)</h2><pre><code># yum -y install git
 # git --version
 git version 1.8.3.1
