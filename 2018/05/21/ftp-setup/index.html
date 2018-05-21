@@ -19,7 +19,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/ftp-1.png">
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/ftp-2.png">
-<meta property="og:updated_time" content="2018-05-21T10:57:15.838Z">
+<meta property="og:updated_time" content="2018-05-21T11:04:36.714Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ftp服务器的简单搭建流程">
 <meta name="twitter:description" content="搭建ftp服务器时一般使用本地用户来访问ftp，虽然可以限制用户权限，安全性还是没有使用虚拟用户登录高，下面通过建立虚拟用户来搭建FTP服务器。">
@@ -250,8 +250,7 @@
 <a id="more"></a>
 <h2 id="FTP用户登陆一般分为三种类型"><a href="#FTP用户登陆一般分为三种类型" class="headerlink" title="FTP用户登陆一般分为三种类型"></a>FTP用户登陆一般分为三种类型</h2><h3 id="匿名用户"><a href="#匿名用户" class="headerlink" title="匿名用户"></a>匿名用户</h3><p>不需要登陆即可直接使用FTP传输文件，匿名访问模式的FTP根目录为/var/ftp</p>
 <h3 id="本地用户"><a href="#本地用户" class="headerlink" title="本地用户"></a>本地用户</h3><p>本地用户即服务器端（除root外）的普通用户</p>
-<p>###虚拟用户</p>
-<p>在vsftpd服务器中，使用虚拟用户的主要好处在于，可以将登录的账号与系统登录的账号区分开来，用户名，密码都不相同，从而进一步增强了FTP服务器的安全性。另外虚拟用户都具有独立的配置选项。可以灵活的控制对ftp服务器的访问。可以控制用户读的权限，写权限，下载，上传的权限</p>
+<h3 id="虚拟用户"><a href="#虚拟用户" class="headerlink" title="虚拟用户"></a>虚拟用户</h3><p>在vsftpd服务器中，使用虚拟用户的主要好处在于，可以将登录的账号与系统登录的账号区分开来，用户名，密码都不相同，从而进一步增强了FTP服务器的安全性。另外虚拟用户都具有独立的配置选项。可以灵活的控制对ftp服务器的访问。可以控制用户读的权限，写权限，下载，上传的权限</p>
 <h1 id="0x00-FTP的安装"><a href="#0x00-FTP的安装" class="headerlink" title="0x00 FTP的安装"></a>0x00 FTP的安装</h1><p>1).查询vsftpd是否安装</p>
 <pre><code># rpm -qc vsftpd
 </code></pre><p>2).安装vsftpd</p>
@@ -285,7 +284,7 @@
     ascii_download_enable=YES            //允许使用ascii码方式下载文件
     ftpd_banner=Welcome to FTP service.
 </code></pre><p>输入以下命令添加一些属性到配置文件：</p>
-<pre><code>echo -e &quot;use_localtime=YES\nlisten_port=21\nchroot_local_user=YES\nidle_session_timeout=300
+<pre><code># echo -e &quot;use_localtime=YES\nlisten_port=21\nchroot_local_user=YES\nidle_session_timeout=300
 
 \ndata_connection_timeout=1\nguest_enable=YES\nguest_username=vsuser #此处要和刚刚创建的用户名一致
 
@@ -412,7 +411,7 @@ SELINUX=disabled #增加
 </code></pre><p>前面说了这一条特别重要，但是没有添加，所以才出了这样的错</p>
 <p>重启vsftpd服务</p>
 <pre><code>systemctl restart vsftpd.service
-</code></pre><p>再次登录成功</p>
+</code></pre><p>再次登录,成功</p>
 <p><img src="http://p8urkh0xe.bkt.clouddn.com/ftp-2.png" alt=""></p>
 <h2 id="其他主机无法连接ftp"><a href="#其他主机无法连接ftp" class="headerlink" title="其他主机无法连接ftp"></a>其他主机无法连接ftp</h2><h3 id="解决方法-1"><a href="#解决方法-1" class="headerlink" title="解决方法"></a>解决方法</h3><pre><code>关闭防火墙
 # systemctl stop iptables.service
