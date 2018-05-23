@@ -19,7 +19,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/ftp-1.png">
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/ftp-2.png">
-<meta property="og:updated_time" content="2018-05-23T04:03:59.515Z">
+<meta property="og:updated_time" content="2018-05-23T04:10:58.763Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ftp服务器的简单搭建流程">
 <meta name="twitter:description" content="搭建ftp服务器时一般使用本地用户来访问ftp，虽然可以限制用户权限，但安全性还是没有使用虚拟用户登录高，下面通过建立虚拟用户来搭建FTP服务器。">
@@ -450,7 +450,7 @@ local_root=/home/vsftp/vsuser2/http/　　#设置FTP账号根目录
 </code></pre><h3 id="5-生成虚拟用户数据文件"><a href="#5-生成虚拟用户数据文件" class="headerlink" title="5.生成虚拟用户数据文件"></a>5.生成虚拟用户数据文件</h3><pre><code># db_load -T -t hash -f /etc/vsftpd/virtusers /etc/vsftpd/virtusers.db
 # chmod 600 /etc/vsftpd/virtusers.db
 </code></pre><h3 id="6-重启服务器"><a href="#6-重启服务器" class="headerlink" title="6.重启服务器"></a>6.重启服务器</h3><pre><code># systemctl restart vsftpd.service
-</code></pre><h1 id="0x16-总结"><a href="#0x16-总结" class="headerlink" title="0x16 总结"></a>0x16 总结</h1><p>应该专门创建一个根目录来作为FTP的文件目录，/home目录作为敏感目录，不应该在这个目录下建立和FTP有关的文件。</p>
+</code></pre><h1 id="0x16-总结"><a href="#0x16-总结" class="headerlink" title="0x16 总结"></a>0x16 总结</h1><p>应该专门创建一个根目录来作为FTP的文件目录，/home目录作为敏感目录，不应该在这个目录下建立和FTP有关的文件。在进入FTP后，传输文件可能会丢一些东西，因为是传的文本，所以先输入bin命令回车，这时候传的文件就会以二进制的方式传输，就不会找出文件数据丢失的情况了。</p>
 <h3 id="未经本人允许，禁止转载"><a href="#未经本人允许，禁止转载" class="headerlink" title="未经本人允许，禁止转载"></a>未经本人允许，禁止转载</h3>
       
     </div>
