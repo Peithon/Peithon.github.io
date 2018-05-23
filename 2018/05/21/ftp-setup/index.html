@@ -18,7 +18,7 @@
 <meta property="og:description" content="搭建ftp服务器时一般使用本地用户来访问ftp，虽然可以限制用户权限，但安全性还是没有使用虚拟用户登录高，下面通过建立虚拟用户来搭建FTP服务器。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/ftp-5001.png">
-<meta property="og:updated_time" content="2018-05-23T04:59:25.894Z">
+<meta property="og:updated_time" content="2018-05-23T05:07:34.572Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ftp服务器的简单搭建流程">
 <meta name="twitter:description" content="搭建ftp服务器时一般使用本地用户来访问ftp，虽然可以限制用户权限，但安全性还是没有使用虚拟用户登录高，下面通过建立虚拟用户来搭建FTP服务器。">
@@ -415,6 +415,7 @@ SELINUX=disabled #增加
 <pre><code>systemctl restart vsftpd.service
 </code></pre><p>再次登录,成功</p>
 <p><img src="http://p8urkh0xe.bkt.clouddn.com/ftp-5001.png" alt=""></p>
+<p>这里报了229错误，这是被动模式的问题，登录后输入passive回车，然后再ls</p>
 <h2 id="其他主机无法连接ftp"><a href="#其他主机无法连接ftp" class="headerlink" title="其他主机无法连接ftp"></a>其他主机无法连接ftp</h2><h3 id="解决方法-1"><a href="#解决方法-1" class="headerlink" title="解决方法"></a>解决方法</h3><pre><code>关闭防火墙
 # systemctl stop iptables.service
 </code></pre><h1 id="0x14-ftp常用命令"><a href="#0x14-ftp常用命令" class="headerlink" title="0x14 ftp常用命令"></a>0x14 ftp常用命令</h1><pre><code>ls                                    显示服务器上的目录
