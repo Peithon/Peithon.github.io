@@ -9,13 +9,13 @@
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="KVM(Kernel Virtual Modle)能够提供像Vmware一样的全虚拟化功能 0x00 检测CPU支不支持虚拟化# egrep -o &amp;apos;(vmx|svm)&amp;apos; /proc/cpuinfo 输出vmx的值说明是支持的,没有的话到Vmware开启  0x01 安装KVM以及相关依赖包# yum -y groupinstall &amp;quot;Virtualization H">
+  <meta name="description" content="KVM(Kernel Virtual Modle)能够提供像Vmware一样的全虚拟化功能">
 <meta name="keywords" content="kvm虚拟化,virsh常用命令">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CentOS7下部署KVM以及virsh常用命令">
 <meta property="og:url" content="http://yoursite.com/2018/05/25/kvm-deploy/index.html">
 <meta property="og:site_name" content="Peithon&#39;s Blog">
-<meta property="og:description" content="KVM(Kernel Virtual Modle)能够提供像Vmware一样的全虚拟化功能 0x00 检测CPU支不支持虚拟化# egrep -o &amp;apos;(vmx|svm)&amp;apos; /proc/cpuinfo 输出vmx的值说明是支持的,没有的话到Vmware开启  0x01 安装KVM以及相关依赖包# yum -y groupinstall &amp;quot;Virtualization H">
+<meta property="og:description" content="KVM(Kernel Virtual Modle)能够提供像Vmware一样的全虚拟化功能">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/kvm0-1.png">
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/kvm1.png">
@@ -32,10 +32,10 @@
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/kvm9.png">
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/kvm10.png">
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/kvm11.png">
-<meta property="og:updated_time" content="2018-05-25T02:59:12.104Z">
+<meta property="og:updated_time" content="2018-05-25T03:05:56.869Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CentOS7下部署KVM以及virsh常用命令">
-<meta name="twitter:description" content="KVM(Kernel Virtual Modle)能够提供像Vmware一样的全虚拟化功能 0x00 检测CPU支不支持虚拟化# egrep -o &amp;apos;(vmx|svm)&amp;apos; /proc/cpuinfo 输出vmx的值说明是支持的,没有的话到Vmware开启  0x01 安装KVM以及相关依赖包# yum -y groupinstall &amp;quot;Virtualization H">
+<meta name="twitter:description" content="KVM(Kernel Virtual Modle)能够提供像Vmware一样的全虚拟化功能">
 <meta name="twitter:image" content="http://p8urkh0xe.bkt.clouddn.com/kvm0-1.png">
   
     <link rel="alternative" href="/atom.xml" title="Peithon&#39;s Blog" type="application/atom+xml">
@@ -260,6 +260,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>KVM(Kernel Virtual Modle)能够提供像Vmware一样的全虚拟化功能</p>
+<a id="more"></a>
 <h2 id="0x00-检测CPU支不支持虚拟化"><a href="#0x00-检测CPU支不支持虚拟化" class="headerlink" title="0x00 检测CPU支不支持虚拟化"></a>0x00 检测CPU支不支持虚拟化</h2><pre><code># egrep -o &apos;(vmx|svm)&apos; /proc/cpuinfo
 </code></pre><p>输出vmx的值说明是支持的,没有的话到Vmware开启</p>
 <p><img src="http://p8urkh0xe.bkt.clouddn.com/kvm0-1.png" alt=""></p>
