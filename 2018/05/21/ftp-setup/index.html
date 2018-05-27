@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>ftp服务器的简单搭建流程 | Peithon&#39;s Blog</title>
+
+  <!-- keywords -->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="搭建ftp服务器时一般使用本地用户来访问ftp，虽然可以限制用户权限，但安全性还是没有使用虚拟用户登录高，下面通过建立虚拟用户来搭建FTP服务器。">
+<meta name="keywords" content="ftp的搭建,建立虚拟用户,ftp常用命令">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ftp服务器的简单搭建流程">
+<meta property="og:url" content="http://yoursite.com/2018/05/21/ftp-setup/index.html">
+<meta property="og:site_name" content="Peithon&#39;s Blog">
+<meta property="og:description" content="搭建ftp服务器时一般使用本地用户来访问ftp，虽然可以限制用户权限，但安全性还是没有使用虚拟用户登录高，下面通过建立虚拟用户来搭建FTP服务器。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/ftp-5001.png">
+<meta property="og:updated_time" content="2018-05-23T09:40:11.571Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ftp服务器的简单搭建流程">
+<meta name="twitter:description" content="搭建ftp服务器时一般使用本地用户来访问ftp，虽然可以限制用户权限，但安全性还是没有使用虚拟用户登录高，下面通过建立虚拟用户来搭建FTP服务器。">
+<meta name="twitter:image" content="http://p8urkh0xe.bkt.clouddn.com/ftp-5001.png">
+  
+    <link rel="alternative" href="/atom.xml" title="Peithon&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://p8urkh0xe.bkt.clouddn.com/touxiang.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+  
+
+  <script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+  
+      <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("YV6LWh5W8UQ3bQKoo628fNVK-gzGzoHsz", "SnDWsQ8dkIu3YguxR8PB7ok5");</script>
+<script src="/js/Counter.js"></script>
+
+  
+</head>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://p8urkh0xe.bkt.clouddn.com/touxiang.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Peithon</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Centos7网络配置/" style="font-size: 10px;">Centos7网络配置</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/ftp常用命令/" style="font-size: 10px;">ftp常用命令</a> <a href="/tags/ftp的搭建/" style="font-size: 10px;">ftp的搭建</a> <a href="/tags/kvm虚拟化/" style="font-size: 10px;">kvm虚拟化</a> <a href="/tags/ssh服务/" style="font-size: 10px;">ssh服务</a> <a href="/tags/tigervnc安装/" style="font-size: 10px;">tigervnc安装</a> <a href="/tags/virsh常用命令/" style="font-size: 10px;">virsh常用命令</a> <a href="/tags/建立虚拟用户/" style="font-size: 10px;">建立虚拟用户</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://cherrygk.github.io/">cherrygk渗透大佬</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Peithon</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://p8urkh0xe.bkt.clouddn.com/touxiang.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Peithon</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-ftp-setup" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/05/21/ftp-setup/" class="article-date">
+  	<time datetime="2018-05-21T10:53:08.000Z" itemprop="datePublished">2018-05-21</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ftp服务器的简单搭建流程
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ftp常用命令/">ftp常用命令</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ftp的搭建/">ftp的搭建</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/建立虚拟用户/">建立虚拟用户</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Linux/">Linux</a><a class="article-category-link" href="/categories/Linux/FTP服务器/">FTP服务器</a>
+	</div>
+
+
+        
+          
+<div class="counter-tag counter">
+    <span id="/2018/05/21/ftp-setup/" class="leancloud_visitors post-title-link"
+          style="font-size: 12px" data-flag-title="ftp服务器的简单搭建流程">
+         &nbsp;
+        view
+    </span>
+</div>
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>搭建ftp服务器时一般使用本地用户来访问ftp，虽然可以限制用户权限，但安全性还是没有使用虚拟用户登录高，下面通过建立虚拟用户来搭建FTP服务器。</p>
+<a id="more"></a>
+<h2 id="FTP用户登陆一般分为三种类型"><a href="#FTP用户登陆一般分为三种类型" class="headerlink" title="FTP用户登陆一般分为三种类型"></a>FTP用户登陆一般分为三种类型</h2><h3 id="匿名用户"><a href="#匿名用户" class="headerlink" title="匿名用户"></a>匿名用户</h3><p>不需要登陆即可直接使用FTP传输文件，匿名访问模式的FTP根目录为/var/ftp</p>
+<h3 id="本地用户"><a href="#本地用户" class="headerlink" title="本地用户"></a>本地用户</h3><p>本地用户即服务器端（除root外）的普通用户</p>
+<h3 id="虚拟用户"><a href="#虚拟用户" class="headerlink" title="虚拟用户"></a>虚拟用户</h3><p>在vsftpd服务器中，使用虚拟用户的主要好处在于，可以将登录的账号与系统登录的账号区分开来，用户名，密码都不相同，从而进一步增强了FTP服务器的安全性。另外虚拟用户都具有独立的配置选项。可以灵活的控制对ftp服务器的访问。可以控制用户读的权限，写权限，下载，上传的权限</p>
+<h1 id="0x00-FTP的安装"><a href="#0x00-FTP的安装" class="headerlink" title="0x00 FTP的安装"></a>0x00 FTP的安装</h1><p>1).查询vsftpd是否安装</p>
+<pre><code># rpm -qc vsftpd
+</code></pre><p>2).安装vsftpd</p>
+<pre><code># yum -y install vsftpd
+</code></pre><p>3).安装vsftpd虚拟用户配置依赖包</p>
+<pre><code># yum install -y psmisc net-tools systemd-devel libdb-devel perl-DBI
+</code></pre><p>4).启动vsftpd</p>
+<pre><code># systemctl start vsftpd
+</code></pre><p>5).设置开机启动</p>
+<pre><code># systemctl enable vsftpd
+</code></pre><h1 id="0x01-新建系统用户"><a href="#0x01-新建系统用户" class="headerlink" title="0x01 新建系统用户"></a>0x01 新建系统用户</h1><p>1).添加用户vsuser</p>
+<pre><code>设置登录shell为/bin/false,使该用户不能登录
+# useradd vsuser -d /home/vsftp -s /bin/false
+</code></pre><p>2).修改目录的所有权</p>
+<pre><code>递归将vsftp目录下的所有者修改为vsuser
+# chown vsuser:vsuser -R /home/vsftp
+</code></pre><h1 id="0x02-设置vsftpd服务器的配置文件"><a href="#0x02-设置vsftpd服务器的配置文件" class="headerlink" title="0x02 设置vsftpd服务器的配置文件"></a>0x02 设置vsftpd服务器的配置文件</h1><p>1).备份文件</p>
+<pre><code># cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.bak
+</code></pre><p>2).编辑配置内容</p>
+<pre><code># vi cp /etc/vsftpd/vsftpd.conf
+
+    #禁止匿名访问
+　　anonymous_enable=NO
+　　anon_upload_enable=NO
+　　anon_mkdir_write_enable=YES
+
+    chown_uploads=NO     //不允许用户修改上传文件的属主
+
+    async_abor_enable=YES               //允许执行特殊的ftp命令
+    ascii_upload_enable=YES              //允许使用ascii码方式上传文件
+    ascii_download_enable=YES            //允许使用ascii码方式下载文件
+    ftpd_banner=Welcome to FTP service.
+</code></pre><p>输入以下命令添加一些属性到配置文件：</p>
+<pre><code># echo -e &quot;use_localtime=YES\nlisten_port=21\nchroot_local_user=YES\nidle_session_timeout=300
+
+\ndata_connection_timeout=1\nguest_enable=YES\nguest_username=vsuser #此处要和刚刚创建的用户名一致
+
+\nuser_config_dir=/etc/vsftpd/vconf\nvirtual_use_local_privs=YES
+
+\npasv_min_port=10060\npasv_max_port=10090
+
+\naccept_timeout=5\nconnect_timeout=1&quot; &gt;&gt; /etc/vsftpd/vsftpd.conf
+</code></pre><p>下面是一些属性的解释：</p>
+<pre><code>chroot_list_enable=NO 　　　　　　　　　　// 不允许用户离开自己的主目录
+　　chroot_list_file=/etc/vsftpd.chroot_list　　  // 虚拟用户列表，每行一个用户名
+　　local_enable=YES 　　　　　　　　　　 　　 // 允许本地用户访问
+　　write_enable=YES 　　　　　　　　　　　　 // 允许本地用户写入
+　　local_umask=022 　　　　　　　　　　　　 // 上传后的文件的默认掩码
+　　chroot_local_user=YES 　　　　　　　　　　 // 禁止本地用户离开自己的主目录
+　　pam_service_name=vsftpd.vu 　　　　　　 // 权限验证需要的加密文件
+　　guest_enable=YES 　　　　　　　　　　　　 // 开启虚拟用户功能
+　　guest_username=vsuser　　　　　　　　　　　// 虚拟用户的宿主目录，即虚拟用户映射为本地vsuser用户
+　　virtual_use_local_privs=YES 　　　　　　   // 用户登录后操作目录和本地用户权限一样
+　　user_config_dir=/etc/vsftpd/vconf 　　　　// 虚拟用户主目录设置文件
+　　allow_writeable_chroot=YES 　　　　　　 // 允许写入用户主目录，这条特别重要
+</code></pre><h1 id="0x03-虚拟用户个人vsftp服务器的配置文件"><a href="#0x03-虚拟用户个人vsftp服务器的配置文件" class="headerlink" title="0x03 虚拟用户个人vsftp服务器的配置文件"></a>0x03 虚拟用户个人vsftp服务器的配置文件</h1><p>1).创建文件夹</p>
+<pre><code># mkdir /etc/vsftpd/vconf
+</code></pre><p>2).创建虚拟用户配置文件</p>
+<pre><code># touch /etc/vsftpd/vconf/vsuser1
+# mkdir -p /home/vsftp/vsuser1/http/mydic
+</code></pre><h1 id="0x04-虚拟用户名单文件"><a href="#0x04-虚拟用户名单文件" class="headerlink" title="0x04 虚拟用户名单文件"></a>0x04 虚拟用户名单文件</h1><pre><code># touch /etc/vsftpd/virtusers
+</code></pre><p>编辑虚拟用户名单内容(奇数行是账号，偶数行是密码)：</p>
+<pre><code>#vi /etc/vsftpd/virtusers
+vsuser1
+123456
+#保存退出
+</code></pre><h1 id="0x05-设置权限"><a href="#0x05-设置权限" class="headerlink" title="0x05 设置权限"></a>0x05 设置权限</h1><p>1).主目录不能有写的权限所以ftp为755，主目录下面的子目录设置为777权限</p>
+<pre><code># chmod -R 755 /home/vsftp/vsuser1/http
+# chmod -R 777 /home/vsftp/vsuser1/http/mydic
+</code></pre><p>2).编辑虚拟用户配置文件</p>
+<pre><code>#文件名要与虚拟用户名相同
+# vi /etc/vsftpd/vconf/vsuser1
+
+local_root=/home/vsftp/vsuser1/http/　　#设置FTP账号根目录     
+write_enable=YES     
+anon_world_readable_only=NO     
+anon_upload_enable=YES     
+anon_mkdir_write_enable=YES     
+anon_other_write_enable=YES         #允许删除和重名名
+#保存退出
+</code></pre><h1 id="0x06-生成虚拟用户数据文件"><a href="#0x06-生成虚拟用户数据文件" class="headerlink" title="0x06 生成虚拟用户数据文件"></a>0x06 生成虚拟用户数据文件</h1><pre><code># db_load -T -t hash -f /etc/vsftpd/virtusers /etc/vsftpd/virtusers.db
+</code></pre><h1 id="0x07-设定PAM验证文件，并指定对虚拟用户数据库文件进行读取"><a href="#0x07-设定PAM验证文件，并指定对虚拟用户数据库文件进行读取" class="headerlink" title="0x07 设定PAM验证文件，并指定对虚拟用户数据库文件进行读取"></a>0x07 设定PAM验证文件，并指定对虚拟用户数据库文件进行读取</h1><pre><code># chmod 600 /etc/vsftpd/virtusers.db
+</code></pre><p>在/etc/pam.d/vsftpd文件的头部添加一下信息(只能在头部添加)</p>
+<p>1).备份文件</p>
+<pre><code># cp /etc/pam.d/vsftpd /etc/pam.d/vsftpd.bak
+</code></pre><p>2).添加信息</p>
+<pre><code># vi /etc/pam.d/vsftpd
+</code></pre><p>将所有配置都注释掉，加入下面内容</p>
+<pre><code>auth sufficient /lib64/security/pam_userdb.so db=/etc/vsftpd/virtusers
+account sufficient /lib64/security/pam_userdb.so db=/etc/vsftpd/virtusers
+</code></pre><h1 id="0x08-防火墙配置文件"><a href="#0x08-防火墙配置文件" class="headerlink" title="0x08 防火墙配置文件"></a>0x08 防火墙配置文件</h1><p>1).关闭firewall</p>
+<p>停止firewall</p>
+<pre><code># systemctl stop firewalld.service
+</code></pre><p>禁止firewall开机启动</p>
+<pre><code># systemctl disable firewalld.service
+</code></pre><p>安装iptables</p>
+<pre><code># yum -y install iptables
+# yum -y update iptables
+</code></pre><p>2).添加防火墙规则</p>
+<pre><code># vi /etc/sysconfig/iptables
+
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 21 -j ACCEPT 
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 10060:10090 -j ACCEPT
+#保存退出
+</code></pre><p>3).重启防火墙</p>
+<pre><code># systemctl restart iptables.service
+</code></pre><p>4).设置开机启动</p>
+<pre><code># systemctl enable iptables.service
+</code></pre><h1 id="0x09-关闭SELINUX"><a href="#0x09-关闭SELINUX" class="headerlink" title="0x09 关闭SELINUX"></a>0x09 关闭SELINUX</h1><pre><code># vi /etc/selinux/config 
+#SELINUX=enforcing #注释掉
+#SELINUXTYPE=targeted #注释掉
+SELINUX=disabled #增加
+#保存退出
+</code></pre><p>执行命令使配置生效</p>
+<pre><code># setenforce 0
+</code></pre><h1 id="0X10-重启vsftpd服务器"><a href="#0X10-重启vsftpd服务器" class="headerlink" title="0X10 重启vsftpd服务器"></a>0X10 重启vsftpd服务器</h1><pre><code># systemctl restart vsftpd.service
+</code></pre><h1 id="0x11-安装ftp客户端"><a href="#0x11-安装ftp客户端" class="headerlink" title="0x11 安装ftp客户端"></a>0x11 安装ftp客户端</h1><pre><code># rpm -Uvh http://mirror.centos.org/centos/6/os/x86_64/Packages/ftp-0.17-54.el6.x86_64.rpm
+</code></pre><h1 id="0x12-FTP数字代码的意义"><a href="#0x12-FTP数字代码的意义" class="headerlink" title="0x12 FTP数字代码的意义"></a>0x12 FTP数字代码的意义</h1><pre><code>110 重新启动标记应答
+120 服务在多久时间内 ready 
+125 数据链路端口开启，准备传送 
+150 文件状态正常，开启数据连接端口
+200 命令执行成功 
+202 命令执行失败
+211 系统状态或是系统求助响应 
+212 目录的状态 
+213 文件的状态
+214 求助的讯息 
+215 名称系统类型 
+220 新的联机服务 ready 
+221 服务的控制连接端口关闭，可以注销 
+225 数据连结开启，但无传输动作
+226 关闭数据连接端口，请求的文件操作成功 
+227 进入 passive mode 
+230 使用者登入
+250 请求的文件操作完成
+257 显示目前的路径名称
+331 用户名称正确，需要密码
+332 登入时需要账号信息
+350 请求的操作需要进一部的命令
+421 无法提供服务，关闭控制连结 
+425 无法开启数据链路
+426 关闭联机，终止传输
+450 请求的操作未执行 
+451 命令终止 : 有本地的错误 
+452 未执行命令 : 磁盘空间不足 
+500 格式错误，无法识别命令 
+501 参数语法错误
+502 命令执行失败
+503 命令顺序错误 
+504 命令所接的参数不正确 
+530 未登入
+532 储存文件需要账户登入
+550 未执行请求的操作
+551 请求的命令终止，类型未知
+552 请求的文件终止，储存位溢出
+553 未执行请求的的命令，名称不正确
+</code></pre><h1 id="0x13-测试ftp"><a href="#0x13-测试ftp" class="headerlink" title="0x13 测试ftp"></a>0x13 测试ftp</h1><h2 id="本地测试报500错误"><a href="#本地测试报500错误" class="headerlink" title="本地测试报500错误"></a>本地测试报500错误</h2><pre><code>500 OOPS: vsftpd:  refusing to run with writable root inside chroot()
+</code></pre><h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><pre><code># vi /etc/vsftpd/vsftpd.conf
+</code></pre><p>添加</p>
+<pre><code>allow_writeable_chroot=YES
+</code></pre><p>前面说了这一条特别重要，但是没有添加，所以才出了这样的错</p>
+<p>重启vsftpd服务</p>
+<pre><code>systemctl restart vsftpd.service
+</code></pre><p>再次登录,成功</p>
+<p><img src="http://p8urkh0xe.bkt.clouddn.com/ftp-5001.png" alt=""></p>
+<p>出现数字代码229,这是被动模式的问题，登录后输入passive回车，然后再ls</p>
+<h2 id="其他主机无法连接ftp"><a href="#其他主机无法连接ftp" class="headerlink" title="其他主机无法连接ftp"></a>其他主机无法连接ftp</h2><h3 id="解决方法-1"><a href="#解决方法-1" class="headerlink" title="解决方法"></a>解决方法</h3><pre><code>关闭防火墙
+# systemctl stop iptables.service
+</code></pre><h1 id="0x14-ftp常用命令"><a href="#0x14-ftp常用命令" class="headerlink" title="0x14 ftp常用命令"></a>0x14 ftp常用命令</h1><pre><code>ls                                    显示服务器上的目录
+ls [remote-dir][local-file]          显示远程目录remote-dir，并存入本地文件local-file 
+get remote-file [local-file]           从服务器下载指定文件到客户端
+mget remote-files                   下载多个远程文件(mget命令允许用通配符下载多个文件)
+put local-file [remote-file]          从客户端上传指定文件到服务器 
+mput local-file                      将多个文件上传至远程主机(mput命令允许用通配符上传多个文件) 
+open                                   连接FTP服务器 
+mput local-file                        将多个文件上传至远程主机(mput命令允许用通配符上传多个文件) 
+mdelete [remote-file]                  删除远程主机文件
+close                                中断与远程服务器的ftp会话（与open对应）
+mkdir dir-name                         在远程主机中创建目录 
+open host[port]                        建立指定的ftp服务器连接，可指定连接端口
+cd directory                          改变服务器的工作目录 
+rename [from][to]                      更改远程主机的文件名
+bye|quit|exit                        退出FTP命令状态
+reget remote-file [local-file]         类似于get,但若local-file存在，则从上次传输中断处续传   
+delete remote-file                     删除远程主机文件
+user user-name [password][account]  向远程主机表明自己的身份，需要密码时，必须输入密码 
+</code></pre><h1 id="0x15-添加只有下载权限的新虚拟用户"><a href="#0x15-添加只有下载权限的新虚拟用户" class="headerlink" title="0x15 添加只有下载权限的新虚拟用户"></a>0x15 添加只有下载权限的新虚拟用户</h1><h3 id="1-创建虚拟用户的配置文件"><a href="#1-创建虚拟用户的配置文件" class="headerlink" title="1.创建虚拟用户的配置文件"></a>1.创建虚拟用户的配置文件</h3><pre><code>#文件名要与虚拟用户名相同
+# touch /etc/vsftpd/vconf/vsuser2
+# mkdir -p /home/vsftp/vsuser2/http/mydic
+</code></pre><h3 id="2-修改权限"><a href="#2-修改权限" class="headerlink" title="2.修改权限"></a>2.修改权限</h3><pre><code># chmod -R 755 /home/vsftp/vsuser2/http
+# chmod -R 777 /home/vsftp/vsuser2/http/mydic
+</code></pre><h3 id="3-添加虚拟用户名单内容-奇数行是账号，偶数行是密码"><a href="#3-添加虚拟用户名单内容-奇数行是账号，偶数行是密码" class="headerlink" title="3.添加虚拟用户名单内容(奇数行是账号，偶数行是密码)"></a>3.添加虚拟用户名单内容(奇数行是账号，偶数行是密码)</h3><pre><code># vi /etc/vsftpd/virtusers
+vsuser2
+123456  #保存退出
+</code></pre><h3 id="4-编辑虚拟用户配置文件"><a href="#4-编辑虚拟用户配置文件" class="headerlink" title="4.编辑虚拟用户配置文件"></a>4.编辑虚拟用户配置文件</h3><pre><code># vi /etc/vsftpd/vconf/vsuser2
+
+local_root=/home/vsftp/vsuser2/http/　　#设置FTP账号根目录
+</code></pre><h3 id="5-生成虚拟用户数据文件"><a href="#5-生成虚拟用户数据文件" class="headerlink" title="5.生成虚拟用户数据文件"></a>5.生成虚拟用户数据文件</h3><pre><code># db_load -T -t hash -f /etc/vsftpd/virtusers /etc/vsftpd/virtusers.db
+# chmod 600 /etc/vsftpd/virtusers.db
+</code></pre><h3 id="6-重启服务器"><a href="#6-重启服务器" class="headerlink" title="6.重启服务器"></a>6.重启服务器</h3><pre><code># systemctl restart vsftpd.service
+</code></pre><h1 id="0x16-总结"><a href="#0x16-总结" class="headerlink" title="0x16 总结"></a>0x16 总结</h1><p>应该专门创建一个根目录来作为FTP的文件目录，/home目录作为敏感目录，不应该在这个目录下建立和FTP有关的文件。在进入FTP后，传输文件可能会丢一些东西，因为是传的文本，所以先输入bin命令回车，这时候传的文件就会以二进制的方式传输，就不会找出文件数据丢失的情况了。</p>
+<h3 id="未经本人允许，禁止转载"><a href="#未经本人允许，禁止转载" class="headerlink" title="未经本人允许，禁止转载"></a>未经本人允许，禁止转载</h3>
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/05/25/kvm-deploy/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          CentOS7下部署KVM以及virsh常用命令
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/05/20/deploy-net/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">CentOS7网络配置问题</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2018 Peithon
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/smackgg/hexo-theme-smackdown" target="_blank">Smackdown</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="/js/main.js"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
+
+
+  </div>
+</body>
+</html>
