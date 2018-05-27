@@ -10,7 +10,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="KVM(Kernel Virtual Modle)能够提供像Vmware一样的全虚拟化功能,我们可以通过KVM虚拟机制作qcow2镜像，用于openstack环境中。">
-<meta name="keywords" content="kvm虚拟化,virsh常用命令,CentOS7">
+<meta name="keywords" content="kvm虚拟化,virsh常用命令,tigervnc安装">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CentOS7下部署KVM以及virsh常用命令">
 <meta property="og:url" content="http://yoursite.com/2018/05/25/kvm-deploy/index.html">
@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/kvm9.png">
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/kvm10.png">
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/kvm11.png">
-<meta property="og:updated_time" content="2018-05-25T03:36:55.525Z">
+<meta property="og:updated_time" content="2018-05-27T06:08:11.401Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CentOS7下部署KVM以及virsh常用命令">
 <meta name="twitter:description" content="KVM(Kernel Virtual Modle)能够提供像Vmware一样的全虚拟化功能,我们可以通过KVM虚拟机制作qcow2镜像，用于openstack环境中。">
@@ -150,7 +150,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/CentOS7/" style="font-size: 10px;">CentOS7</a> <a href="/tags/Centos7网络配置/" style="font-size: 10px;">Centos7网络配置</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/ftp常用命令/" style="font-size: 10px;">ftp常用命令</a> <a href="/tags/ftp的搭建/" style="font-size: 10px;">ftp的搭建</a> <a href="/tags/kvm虚拟化/" style="font-size: 10px;">kvm虚拟化</a> <a href="/tags/ssh服务/" style="font-size: 10px;">ssh服务</a> <a href="/tags/virsh常用命令/" style="font-size: 10px;">virsh常用命令</a> <a href="/tags/建立虚拟用户/" style="font-size: 10px;">建立虚拟用户</a>
+						<a href="/tags/Centos7网络配置/" style="font-size: 10px;">Centos7网络配置</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/ftp常用命令/" style="font-size: 10px;">ftp常用命令</a> <a href="/tags/ftp的搭建/" style="font-size: 10px;">ftp的搭建</a> <a href="/tags/kvm虚拟化/" style="font-size: 10px;">kvm虚拟化</a> <a href="/tags/ssh服务/" style="font-size: 10px;">ssh服务</a> <a href="/tags/tigervnc安装/" style="font-size: 10px;">tigervnc安装</a> <a href="/tags/virsh常用命令/" style="font-size: 10px;">virsh常用命令</a> <a href="/tags/建立虚拟用户/" style="font-size: 10px;">建立虚拟用户</a>
 					</div>
 				</section>
 				
@@ -233,7 +233,7 @@
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS7/">CentOS7</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kvm虚拟化/">kvm虚拟化</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/virsh常用命令/">virsh常用命令</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kvm虚拟化/">kvm虚拟化</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tigervnc安装/">tigervnc安装</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/virsh常用命令/">virsh常用命令</a></li></ul>
 	</div>
 
         
@@ -433,7 +433,7 @@ GATEWAY0=网关
 <pre><code># ping 宿主机ip
 # ping www.baidu.com
 </code></pre><p>通信正常，然后就可以通过安装vnc来远程Linux桌面了</p>
-<h1 id="0x13-安装Tiger-VNC实现linux远程桌面连接"><a href="#0x13-安装Tiger-VNC实现linux远程桌面连接" class="headerlink" title="0x13 安装Tiger-VNC实现linux远程桌面连接"></a>0x13 安装Tiger-VNC实现linux远程桌面连接</h1><h5 id="Tiger-VNC分为客户端和服务端两部分，服务端就是现在装的kvm-将该KVM虚拟机的桌面共享出来，客户端用来远程连接到服务端的tigervnc"><a href="#Tiger-VNC分为客户端和服务端两部分，服务端就是现在装的kvm-将该KVM虚拟机的桌面共享出来，客户端用来远程连接到服务端的tigervnc" class="headerlink" title="Tiger-VNC分为客户端和服务端两部分，服务端就是现在装的kvm,将该KVM虚拟机的桌面共享出来，客户端用来远程连接到服务端的tigervnc"></a>Tiger-VNC分为客户端和服务端两部分，服务端就是现在装的kvm,将该KVM虚拟机的桌面共享出来，客户端用来远程连接到服务端的tigervnc</h5><h2 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h2><h3 id="1-安装Tiger-VNC服务端"><a href="#1-安装Tiger-VNC服务端" class="headerlink" title="1).安装Tiger-VNC服务端"></a>1).安装Tiger-VNC服务端</h3><pre><code># yum -y install tiger-server
+<h1 id="0x13-安装Tiger-VNC实现linux远程桌面连接"><a href="#0x13-安装Tiger-VNC实现linux远程桌面连接" class="headerlink" title="0x13 安装Tiger-VNC实现linux远程桌面连接"></a>0x13 安装Tiger-VNC实现linux远程桌面连接</h1><h5 id="Tiger-VNC分为客户端和服务端两部分，服务端就是现在装的kvm-将该KVM虚拟机的桌面共享出来，客户端用来远程连接到服务端的tigervnc"><a href="#Tiger-VNC分为客户端和服务端两部分，服务端就是现在装的kvm-将该KVM虚拟机的桌面共享出来，客户端用来远程连接到服务端的tigervnc" class="headerlink" title="Tiger-VNC分为客户端和服务端两部分，服务端就是现在装的kvm,将该KVM虚拟机的桌面共享出来，客户端用来远程连接到服务端的tigervnc"></a>Tiger-VNC分为客户端和服务端两部分，服务端就是现在装的kvm,将该KVM虚拟机的桌面共享出来，客户端用来远程连接到服务端的tigervnc</h5><h2 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h2><h3 id="1-安装Tiger-VNC服务端"><a href="#1-安装Tiger-VNC服务端" class="headerlink" title="1).安装Tiger-VNC服务端"></a>1).安装Tiger-VNC服务端</h3><pre><code># yum -y install tigervnc-server
 </code></pre><h3 id="2-配置Tiger-VNC"><a href="#2-配置Tiger-VNC" class="headerlink" title="2).配置Tiger-VNC"></a>2).配置Tiger-VNC</h3><pre><code># vncserver
 </code></pre><p>第一次启动会要求输入密码，使用客户端连接是需要输入此密码进行验证，可以使用vncpasswd修改密码</p>
 <p><img src="http://p8urkh0xe.bkt.clouddn.com/kvm9.png" alt=""></p>
