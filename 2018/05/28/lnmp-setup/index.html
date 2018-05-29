@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>使用源代码搭建LNMP动态网站 | Peithon&#39;s Blog</title>
+
+  <!-- keywords -->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="想搭建一个练习平台，之前一直使用的是LAMP环境搭建的,使用的是yum仓库。这次想尝试使用LNMP来搭建，利用源代码安装，熟悉一下Nginx。">
+<meta name="keywords" content="lnmp搭建">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用源代码搭建LNMP动态网站">
+<meta property="og:url" content="http://yoursite.com/2018/05/28/lnmp-setup/index.html">
+<meta property="og:site_name" content="Peithon&#39;s Blog">
+<meta property="og:description" content="想搭建一个练习平台，之前一直使用的是LAMP环境搭建的,使用的是yum仓库。这次想尝试使用LNMP来搭建，利用源代码安装，熟悉一下Nginx。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-5-28/51351698.jpg">
+<meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-5-28/20181852.jpg">
+<meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-5-28/47149746.jpg">
+<meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-5-28/61643236.jpg">
+<meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-5-28/83415991.jpg">
+<meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-5-28/93653711.jpg">
+<meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-5-28/52311967.jpg">
+<meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-5-28/73622794.jpg">
+<meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-5-28/53416616.jpg">
+<meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-5-28/71975436.jpg">
+<meta property="og:updated_time" content="2018-05-29T03:12:56.830Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用源代码搭建LNMP动态网站">
+<meta name="twitter:description" content="想搭建一个练习平台，之前一直使用的是LAMP环境搭建的,使用的是yum仓库。这次想尝试使用LNMP来搭建，利用源代码安装，熟悉一下Nginx。">
+<meta name="twitter:image" content="http://p8urkh0xe.bkt.clouddn.com/18-5-28/51351698.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="Peithon&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://p8urkh0xe.bkt.clouddn.com/touxiang.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+  
+
+  <script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+  
+      <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("YV6LWh5W8UQ3bQKoo628fNVK-gzGzoHsz", "SnDWsQ8dkIu3YguxR8PB7ok5");</script>
+<script src="/js/Counter.js"></script>
+
+  
+</head>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://p8urkh0xe.bkt.clouddn.com/touxiang.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Peithon</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Centos7网络配置/" style="font-size: 10px;">Centos7网络配置</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/ftp常用命令/" style="font-size: 10px;">ftp常用命令</a> <a href="/tags/ftp的搭建/" style="font-size: 10px;">ftp的搭建</a> <a href="/tags/kvm虚拟化/" style="font-size: 10px;">kvm虚拟化</a> <a href="/tags/lnmp搭建/" style="font-size: 10px;">lnmp搭建</a> <a href="/tags/ssh服务/" style="font-size: 10px;">ssh服务</a> <a href="/tags/tigervnc安装/" style="font-size: 10px;">tigervnc安装</a> <a href="/tags/virsh常用命令/" style="font-size: 10px;">virsh常用命令</a> <a href="/tags/建立虚拟用户/" style="font-size: 10px;">建立虚拟用户</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://cherrygk.github.io/">cherrygk渗透大佬</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Peithon</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://p8urkh0xe.bkt.clouddn.com/touxiang.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Peithon</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-lnmp-setup" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/05/28/lnmp-setup/" class="article-date">
+  	<time datetime="2018-05-28T09:27:33.000Z" itemprop="datePublished">2018-05-28</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      使用源代码搭建LNMP动态网站
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/lnmp搭建/">lnmp搭建</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Linux/">Linux</a>
+	</div>
+
+
+        
+          
+<div class="counter-tag counter">
+    <span id="/2018/05/28/lnmp-setup/" class="leancloud_visitors post-title-link"
+          style="font-size: 12px" data-flag-title="使用源代码搭建LNMP动态网站">
+         &nbsp;
+        view
+    </span>
+</div>
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>想搭建一个练习平台，之前一直使用的是LAMP环境搭建的,使用的是yum仓库。这次想尝试使用LNMP来搭建，利用源代码安装，熟悉一下Nginx。<br><a id="more"></a></p>
+<h2 id="0x00-更换yum源为阿里云源"><a href="#0x00-更换yum源为阿里云源" class="headerlink" title="0x00 更换yum源为阿里云源"></a>0x00 更换yum源为阿里云源</h2><p>1).备份原来的源</p>
+<pre><code># mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+</code></pre><p>2).下载新的源到/etc/yum.repos.d/目录下</p>
+<pre><code># wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+</code></pre><p>3)生成缓存</p>
+<pre><code># yum makecache
+</code></pre><h2 id="0x01-安装编译程序源码的环境"><a href="#0x01-安装编译程序源码的环境" class="headerlink" title="0x01 安装编译程序源码的环境"></a>0x01 安装编译程序源码的环境</h2><pre><code># yum install -y apr* autoconf automake bison bzip2 bzip2* compat* cpp curl curl-devel fontconfig fontconfig-devel freetype freetype* freetype-devel gcc gcc-c++ gd gettext gettext-devel glibc kernel kernel-headers keyutils keyutils-libs-devel krb5-devel libcom_err-devel libpng libpng-devel libjpeg* libsepol-devel libselinux-devel libstdc++-devel libtool* libgomp libxml2 libxml2-devel libXpm* libtiff libtiff* make mpfr ncurses* ntp openssl openssl-devel patch pcre-devel perl php-common php-gd policycoreutils telnet t1lib t1lib* nasm nasm* wget zlib-devel
+</code></pre><h2 id="0x02-下载搭建LNMP所需的软件包"><a href="#0x02-下载搭建LNMP所需的软件包" class="headerlink" title="0x02 下载搭建LNMP所需的软件包"></a>0x02 下载搭建LNMP所需的软件包</h2><pre><code># cd /usr/local/src
+</code></pre><p>通过<a href="https://pan.baidu.com/s/1w2TDjsicsH0nABD816XpeA" target="_blank" rel="noopener">百度云链接下载</a>，将软件包放到该目录下</p>
+<h2 id="0x03-安装CMake"><a href="#0x03-安装CMake" class="headerlink" title="0x03 安装CMake"></a>0x03 安装CMake</h2><p>1).解压tar包</p>
+<pre><code># tar xzvf cmake-2.8.11.2.tar.gz   
+</code></pre><p>2).进入cmake-2.8.11.2目录,并执行安装  </p>
+<pre><code># cd cmake-2.8.11.2/                       
+# ./configure                               
+</code></pre><p>3).编译源代码生成可执行文件</p>
+<pre><code># make  
+</code></pre><p>4).安装编译成功的可执行文件，一般目录在/usr/local/bin下</p>
+<pre><code># make install                             
+</code></pre><p>CMake是Linux系统下常用的编译工具，因为使用源码包安装编译时需要用到，所以先安装，通常源码安装四个步骤</p>
+<pre><code>1).下载及解压源码包文件
+2).编译源码包代码
+3).生成二进制安装程序
+4).运行二进制的服务程序安装包
+</code></pre><h2 id="0x04-安装MYSQL数据库"><a href="#0x04-安装MYSQL数据库" class="headerlink" title="0x04 安装MYSQL数据库"></a>0x04 安装MYSQL数据库</h2><p>在系统中创建一个名为sqladmin的用户，专门用于负责运行MySQL数据库。并把该账户的Bash终端设置成nologin解释器，提高系统的安全性。</p>
+<p>回到/usr/local/src目录下</p>
+<p>1).添加本地用户sqladmin,设置shell为nologin</p>
+<pre><code># useradd mysql -s /sbin/nologin
+</code></pre><p>2).创建目录用于保存MySQL数据库有关文件</p>
+<pre><code># mkdir -p /usr/local/mysql/var
+</code></pre><p>3).将该目录的所有者和所属组身份修改为sqladmin</p>
+<pre><code># chown -Rf mysql:mysql /usr/local/mysql
+</code></pre><p>4).解压MySQL源代码tar包</p>
+<pre><code># tar xzvf mysql-5.6.19.tar.gz
+</code></pre><p>5).编译数据库</p>
+<pre><code># cd mysql-5.6.19/
+# cmake . -DCMAKE_INSTALL_PREFIX=/usr/local/mysql -DMYSQL_DATADIR=/usr/local/mysql/var -DSYSCONFDIR=/etc
+
+各参数意义:
+-DCMAKE_INSTALL_PREFIX    用于定义数据库服务程序的保存目录
+-DMYSQL_DATADIR           用于定义真实数据库文件的目录
+-DSYSCONFDIR              定义MySQL数据库配置文件的保存目录
+</code></pre><p>6).编译源代码生成二可执行文件</p>
+<pre><code># make
+</code></pre><p>7).安装可执行程序</p>
+<pre><code># make install
+</code></pre><p>8).删除/etc目录中的mysql的默认配置文件</p>
+<pre><code># rm -rf /etc/my.cnf
+</code></pre><p>9).进入数据库服务程序的保存目录</p>
+<p>在scripts内找到一个名为mysql_install_db的脚本程序，并执行这个脚本程序</p>
+<pre><code># cd /usr/local/mysql
+# ./scripts/mysql_install_db --user=sqladmin --basedir=/usr/local/mysql --datadir=/usr/local/mysql/var
+</code></pre><p>10).新生成的MySQL数据库配置文件链接到/etc目录中</p>
+<pre><code># ln -s my.cnf /etc/my.cnf
+</code></pre><p>11).程序目录中的开机程序文件复制到/etc/rc.d/init.d目录中</p>
+<pre><code>#  cp ./support-files/mysql.server /etc/rc.d/init.d/mysqld
+</code></pre><p>12).修改数据库脚本权限</p>
+<pre><code># chmod 755 /etc/rc.d/init.d/mysqld
+</code></pre><p>13).修改MySQL数据库的脚本文件</p>
+<pre><code># vi /etc/rc.d/init.d/mysqld 
+</code></pre><p>命令模式输入”:set nu”显示所有行数,填入信息</p>
+<pre><code> 46 basedir=/usr/local/mysql
+ 47 datadir=/usr/local/mysql/var
+#保存退出
+</code></pre><p>14).启动数据库</p>
+<pre><code># service mysqld start
+</code></pre><p>启动数据库出现问题：</p>
+<pre><code>Starting MySQL. ERROR! The server quit without updating PID file (/usr/local/mysql/var/localhost.localdomain.pid).
+</code></pre><p>解决过程：</p>
+<pre><code>刚开始我以为是没有localhost.localdomain.pid,所以我建了这个文件，然后发现当我想启动mysql时，新建的.pid文件就消失了
+卧榻，网上Google了半天各种办法都试过了也没解决，回头看到一个localhost.localdomain.err文件，打开看到一行关键信息
+119563 [ERROR] Fatal error: Can&apos;t change to run as user &apos;mysql&apos; ;  Please check that the user exists!
+原来是没有mysql这个用户，赶紧把之前建的sqladmin用户删除了，新建了mysql用户，并重修修改了mysql文件的所有者和权限
+并且把前面的步骤内容更改了一下，但是问题记录了下来，localhost.localdomain.err文件路径:/usr/local/mysql/var/localhost.localdomain.err
+</code></pre><p>解决问题的步骤：</p>
+<pre><code># userdel sqladmin(之前新建的sqlamdin用户)
+# useradd mysql -s /sbin/nologin
+# chown -Rf mysql:mysql /usr/local/mysql
+# service mysqld start
+#然后数据库启动成功,可以进行下一步安装
+</code></pre><p>15.将MySQL服务设置开机启动</p>
+<pre><code># chkconfig mysqld on
+</code></pre><p>16.编辑/etc/profile文件将命令所保存的目录永久性地定义到PATH变量</p>
+<p>mysql数据库自带了许多命令，但是Bash终端的PATH变量并不包含这些命令所在的目录，所以需要自己添加，这样当物理设备在下一次重启时就会永久生效了。使用source命令加载一下/ect/profile文件，此时新的PATH变量也可以立即生效了。</p>
+<pre><code># vi /etc/profile
+</code></pre><p>使用”:set nu”命令查看所有行数，在47行添加</p>
+<pre><code>export PATH=$PATH:/usr/local/mysql/bin
+</code></pre><p><img src="http://p8urkh0xe.bkt.clouddn.com/18-5-28/51351698.jpg" alt=""></p>
+<pre><code># source /etc/profile
+</code></pre><p>17.初始化MySQL数据库</p>
+<pre><code># mysql_secure_installation 
+</code></pre><p>设置参数如下</p>
+<pre><code>NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MySQL
+      SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!
+
+In order to log into MySQL to secure it, we&apos;ll need the current
+password for the root user.  If you&apos;ve just installed MySQL, and
+you haven&apos;t set the root password yet, the password will be blank,
+so you should just press enter here.
+
+Enter current password for root (enter for none): 回车
+OK, successfully used password, moving on...
+
+Setting the root password ensures that nobody can log into the MySQL
+root user without the proper authorisation.
+
+Set root password? [Y/n] y（为数据库管理员root设置密码）
+New password: 输入密码
+Re-enter new password: 确认密码
+Password updated successfully!
+Reloading privilege tables..
+ ... Success!
+
+
+By default, a MySQL installation has an anonymous user, allowing anyone
+to log into MySQL without having to have a user account created for
+them.  This is intended only for testing, and to make the installation
+go a bit smoother.  You should remove them before moving into a
+production environment.
+
+Remove anonymous users? [Y/n] y   （删除匿名用户）
+ ... Success!
+
+Normally, root should only be allowed to connect from &apos;localhost&apos;.  This
+ensures that someone cannot guess at the root password from the network.
+
+Disallow root login remotely? [Y/n] y   （禁止root远程登录）
+ ... Success!
+
+By default, MySQL comes with a database named &apos;test&apos; that anyone can
+access.  This is also intended only for testing, and should be removed
+before moving into a production environment.
+
+Remove test database and access to it? [Y/n] y   （删除test数据库并取消对其的访问权限）
+ - Dropping test database...
+ ... Success!
+ - Removing privileges on test database...
+ ... Success!
+
+Reloading the privilege tables will ensure that all changes made so far
+will take effect immediately.
+
+Reload privilege tables now? [Y/n] y   （刷新授权，让初始化立即生效）
+ ... Success!
+
+
+All done!  If you&apos;ve completed all of the above steps, your MySQL
+installation should now be secure.
+
+Thanks for using MySQL!
+
+
+Cleaning up...
+</code></pre><h2 id="0x05-配置Nginx服务"><a href="#0x05-配置Nginx服务" class="headerlink" title="0x05 配置Nginx服务"></a>0x05 配置Nginx服务</h2><h3 id="安装Nginx所需的依赖包"><a href="#安装Nginx所需的依赖包" class="headerlink" title="安装Nginx所需的依赖包"></a>安装Nginx所需的依赖包</h3><h5 id="1-安装pcre包"><a href="#1-安装pcre包" class="headerlink" title="1.安装pcre包"></a>1.安装pcre包</h5><p>软件包pcre是Nginx服务程序用于实现伪静态功能必不可少的依赖包</p>
+<p>1).进入/usr/local/src目录，解压tar包</p>
+<pre><code># tar xzvf pcre-8.35.tar.gz 
+</code></pre><p>2).进入pcre目录，编译</p>
+<pre><code># cd pcre-8.35
+# ./configure --prefix=/usr/local/pcre
+</code></pre><p>3).生成可执行文件</p>
+<pre><code># make
+</code></pre><p>4).执行</p>
+<pre><code># make install
+</code></pre><h5 id="2-安装openssl包"><a href="#2-安装openssl包" class="headerlink" title="2.安装openssl包"></a>2.安装openssl包</h5><p>openssl软件包是用于提供网站加密证书服务的程序文件，在安装该程序时需要自定义服务程序的安装目录，以便于稍后调用它们的时候更可控。</p>
+<pre><code># cd /usr/local/src
+# tar xzvf pcre-8.35.tar.gz
+# cd pcre-8.35
+# ./configure --prefix=/usr/local/pcre
+# make
+# make install
+</code></pre><p>配置openssl的配置文件，将命令目录添加到PATH环境变量中去,使用source命令让它立即生效</p>
+<pre><code># vi /etc/profile
+</code></pre><p><img src="http://p8urkh0xe.bkt.clouddn.com/18-5-28/20181852.jpg" alt=""></p>
+<pre><code># source /etc/profile
+</code></pre><h5 id="3-安装zlib包"><a href="#3-安装zlib包" class="headerlink" title="3.安装zlib包"></a>3.安装zlib包</h5><p>zlib软件包是用于提供压缩功能的函数库文件</p>
+<pre><code># cd /usr/local/src
+# tar xzvf zlib-1.2.8.tar.gz 
+# cd zlib-1.2.8
+# ./configure --prefix=/usr/local/zlib
+# make
+# make install
+</code></pre><h3 id="创建执行Nginx服务程序的账号"><a href="#创建执行Nginx服务程序的账号" class="headerlink" title="创建执行Nginx服务程序的账号"></a>创建执行Nginx服务程序的账号</h3><pre><code># cd /usr/local/src
+# useradd www -s /sbin/nologin
+</code></pre><h3 id="安装Nginx服务器"><a href="#安装Nginx服务器" class="headerlink" title="安装Nginx服务器"></a>安装Nginx服务器</h3><pre><code># tar xzvf nginx-1.6.0.tar.gz
+# cd nginx-1.6.0/
+# ./configure --prefix=/usr/local/nginx --without-http_memcached_module --user=www --group=www --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-openssl=/usr/local/src/openssl-1.0.1h --with-zlib=/usr/local/src/zlib-1.2.8 --with-pcre=/usr/local/src/pcre-8.35
+# make
+# make install
+</code></pre><p>参数意义：</p>
+<ul>
+<li>–prefix参数用于定义服务程序稍后安装到的位置</li>
+<li>–user与–group参数用于指定执行Nginx服务程序的用户名和用户组</li>
+<li>在使用参数调用openssl、zlib、pcre软件包时，写出软件源码包的解压路径，而不是程序的安装路径</li>
+</ul>
+<h3 id="将Nginx设置到开机启动项中"><a href="#将Nginx设置到开机启动项中" class="headerlink" title="将Nginx设置到开机启动项中"></a>将Nginx设置到开机启动项中</h3><pre><code># vi /etc/rc.d/init.d/nginx
+</code></pre><p>配置脚本文件(因为没有nginx这个文件，直接copy就好)</p>
+<pre><code>#!/bin/bash
+# nginx - this script starts and stops the nginx daemon
+# chkconfig: - 85 15
+# description: Nginx is an HTTP(S) server, HTTP(S) reverse \
+# proxy and IMAP/POP3 proxy server
+# processname: nginx
+# config: /etc/nginx/nginx.conf
+# config: /usr/local/nginx/conf/nginx.conf
+# pidfile: /usr/local/nginx/logs/nginx.pid
+# Source function library.
+. /etc/rc.d/init.d/functions
+# Source networking configuration.
+. /etc/sysconfig/network
+# Check that networking is up.
+[ &quot;$NETWORKING&quot; = &quot;no&quot; ] &amp;&amp; exit 0
+nginx=&quot;/usr/local/nginx/sbin/nginx&quot;
+prog=$(basename $nginx)
+NGINX_CONF_FILE=&quot;/usr/local/nginx/conf/nginx.conf&quot;
+[ -f /etc/sysconfig/nginx ] &amp;&amp; . /etc/sysconfig/nginx
+lockfile=/var/lock/subsys/nginx
+make_dirs() {
+# make required directories
+user=`$nginx -V 2&gt;&amp;1 | grep &quot;configure arguments:&quot; | sed &apos;s/[^*]*--user=\([^ ]*\).*/\1/g&apos; -`
+        if [ -z &quot;`grep $user /etc/passwd`&quot; ]; then
+                useradd -M -s /bin/nologin $user
+        fi
+options=`$nginx -V 2&gt;&amp;1 | grep &apos;configure arguments:&apos;`
+for opt in $options; do
+        if [ `echo $opt | grep &apos;.*-temp-path&apos;` ]; then
+                value=`echo $opt | cut -d &quot;=&quot; -f 2`
+                if [ ! -d &quot;$value&quot; ]; then
+                        # echo &quot;creating&quot; $value
+                        mkdir -p $value &amp;&amp; chown -R $user $value
+                fi
+        fi
+done
+}
+start() {
+[ -x $nginx ] || exit 5
+[ -f $NGINX_CONF_FILE ] || exit 6
+make_dirs
+echo -n $&quot;Starting $prog: &quot;
+daemon $nginx -c $NGINX_CONF_FILE
+retval=$?
+echo
+[ $retval -eq 0 ] &amp;&amp; touch $lockfile
+return $retval
+}
+stop() {
+echo -n $&quot;Stopping $prog: &quot;
+killproc $prog -QUIT
+retval=$?
+echo
+[ $retval -eq 0 ] &amp;&amp; rm -f $lockfile
+return $retval
+}
+restart() {
+#configtest || return $?
+stop
+sleep 1
+start
+}
+reload() {
+#configtest || return $?
+echo -n $&quot;Reloading $prog: &quot;
+killproc $nginx -HUP
+RETVAL=$?
+echo
+}
+force_reload() {
+restart
+}
+configtest() {
+$nginx -t -c $NGINX_CONF_FILE
+}
+rh_status() {
+status $prog
+}
+rh_status_q() {
+rh_status &gt;/dev/null 2&gt;&amp;1
+}
+case &quot;$1&quot; in
+start)
+        rh_status_q &amp;&amp; exit 0
+        $1
+        ;;
+stop)
+        rh_status_q || exit 0
+        $1
+        ;;
+restart|configtest)
+$1
+;;
+reload)
+        rh_status_q || exit 7
+        $1
+        ;;
+force-reload)
+        force_reload
+        ;;
+status)
+        rh_status
+        ;;
+condrestart|try-restart)
+        rh_status_q || exit 0
+        ;;
+*)
+echo $&quot;Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload|configtest}&quot;
+exit 2
+esac
+#保存退出
+</code></pre><h3 id="为脚本赋予755权限，然后使用chkconfig命令添加服务到开机启动项"><a href="#为脚本赋予755权限，然后使用chkconfig命令添加服务到开机启动项" class="headerlink" title="为脚本赋予755权限，然后使用chkconfig命令添加服务到开机启动项"></a>为脚本赋予755权限，然后使用chkconfig命令添加服务到开机启动项</h3><pre><code># chmod 755 /etc/rc.d/init.d/nginx
+# /etc/rc.d/init.d/nginx restart    //以绝对路径执行该脚本
+状态：
+Reloading systemd:                                         [  确定  ]
+Restarting nginx (via systemctl):                          [  确定  ]
+在nginx-1.6.0目录下
+root@localhost nginx-1.6.0]# chkconfig nginx on
+</code></pre><h3 id="查看是否安装成功"><a href="#查看是否安装成功" class="headerlink" title="查看是否安装成功"></a>查看是否安装成功</h3><pre><code># elinks 服务器ip
+</code></pre><p><img src="http://p8urkh0xe.bkt.clouddn.com/18-5-28/47149746.jpg" alt=""></p>
+<h2 id="0x06-配置PHP服务"><a href="#0x06-配置PHP服务" class="headerlink" title="0x06 配置PHP服务"></a>0x06 配置PHP服务</h2><p>php具有开源、免费、快捷、跨平台性强、效率高等优良特性，是目前Web开发领域最常用的语言之一,安装php比安装Nginx还要复杂，得先安装很多依赖包，所以用源码包安装LNMP环境特别耗费时间</p>
+<h3 id="安装依赖包"><a href="#安装依赖包" class="headerlink" title="安装依赖包"></a>安装依赖包</h3><h5 id="1-安装yasm包"><a href="#1-安装yasm包" class="headerlink" title="1.安装yasm包"></a>1.安装yasm包</h5><p>yasm源码包是一款常见的开源汇编器</p>
+<pre><code># cd /usr/local/src
+# tar zxvf yasm-1.2.0.tar.gz
+# cd yasm-1.2.0
+# ./configure
+# make
+# make install
+</code></pre><h5 id="2-安装libmcrypt包"><a href="#2-安装libmcrypt包" class="headerlink" title="2.安装libmcrypt包"></a>2.安装libmcrypt包</h5><p>libmcrypt源码包是用于加密算法的扩展库程序</p>
+<pre><code># cd /usr/local/src
+# tar zxvf libmcrypt-2.5.8.tar.gz
+# cd libmcrypt-2.5.8
+# ./configure
+# make
+# make install
+</code></pre><h5 id="3-安装libvpx包"><a href="#3-安装libvpx包" class="headerlink" title="3.安装libvpx包"></a>3.安装libvpx包</h5><p>libvpx源码包是用于提供视频编码器的服务程序</p>
+<pre><code># cd /usr/local/src
+# tar xjvf libvpx-v1.3.0.tar.bz2
+# cd libvpx-v1.3.0
+# ./configure --prefix=/usr/local/libvpx --enable-shared --enable-vp9
+# make
+# make install
+</code></pre><h5 id="4-安装tiff包"><a href="#4-安装tiff包" class="headerlink" title="4.安装tiff包"></a>4.安装tiff包</h5><p>tiff源码包是用于提供标签图像文件格式的服务程序</p>
+<pre><code># tar zxvf tiff-4.0.3.tar.gz
+# cd tiff-4.0.3
+# ./configure --prefix=/usr/local/tiff --enable-shared
+# make
+# make install
+</code></pre><h5 id="5-安装libpng包"><a href="#5-安装libpng包" class="headerlink" title="5.安装libpng包"></a>5.安装libpng包</h5><p>libpng源码包是用于提供png图片格式支持函数库的服务程序</p>
+<pre><code># cd /usr/local/src
+# tar zxvf libpng-1.6.12.tar.gz
+# cd libpng-1.6.12
+# ./configure --prefix=/usr/local/libpng --enable-shared
+# make
+# make install
+</code></pre><h5 id="6-安装freetype包"><a href="#6-安装freetype包" class="headerlink" title="6.安装freetype包"></a>6.安装freetype包</h5><p>freetype源码包是用于提供字体支持引擎的服务程序</p>
+<pre><code># cd /usr/local/src
+# tar zxvf freetype-2.5.3.tar.gz
+# cd freetype-2.5.3
+# ./configure --prefix=/usr/local/freetype --enable-shared
+# make
+# make install
+</code></pre><h5 id="7-安装jpeg包"><a href="#7-安装jpeg包" class="headerlink" title="7.安装jpeg包"></a>7.安装jpeg包</h5><p>jpeg源码包是用于提供jpeg图片格式支持函数库的服务程序</p>
+<pre><code># cd /usr/local/src
+# tar zxvf jpegsrc.v9a.tar.gz
+# cd jpeg-9a
+# ./configure --prefix=/usr/local/jpeg --enable-shared
+# mkae
+# make install
+</code></pre><h5 id="8-安装libgd包"><a href="#8-安装libgd包" class="headerlink" title="8.安装libgd包"></a>8.安装libgd包</h5><p>libgd源码包是用于提供图形处理的服务程序，编译时要写入jpeg、libpng、freetype、tiff、libvpx等服务程序在系统中的安装路径</p>
+<pre><code># cd ..
+# tar zxvf libgd-2.1.0.tar.gz
+# ./configure --prefix=/usr/local/libgd --enable-shared --with-jpeg=/usr/local/jpeg --with-png=/usr/local/libpng --with-freetype=/usr/local/freetype --with-fontconfig=/usr/local/freetype --with-xpm=/usr/ --with-tiff=/usr/local/tiff --with-vpx=/usr/local/libvpx
+# make
+# make install
+</code></pre><h5 id="9-安装t1lib包"><a href="#9-安装t1lib包" class="headerlink" title="9.安装t1lib包"></a>9.安装t1lib包</h5><p>t1lib源码包是用于提供图片生成函数库的服务程序</p>
+<pre><code># cd ..
+# tar zxvf t1lib-5.1.2.tar.gz
+# cd t1lib-5.1.2
+# ./configure --prefix=/usr/local/t1lib --enable-shared
+# make
+# make install
+# ln -s /usr/lib64/libltdl.so /usr/lib/libltdl.so 
+# cp -frp /usr/lib64/libXpm.so* /usr/lib/
+</code></pre><h3 id="安装php服务"><a href="#安装php服务" class="headerlink" title="安装php服务"></a>安装php服务</h3><p>在开始编译php源码包之前，先定义一个名为LD_LIBRARY_PATH的全局环境变量，该环境变量的作用是帮助系统找到指定的动态链接库文件，这些文件是编译php服务源码包的必须元素之一。编译php服务源码包时，除了定义要安装到的目录以外，还需要依次定义配置php服务程序配置文件的保存目录、MySQL数据库服务程序所在目录、MySQL数据库服务程序配置文件所在目录，以及libpng、jpeg、freetype、libvpx、zlib、t1lib等服务程序的安装目录路径，并通过参数启动php服务程序的诸多默认功能</p>
+<pre><code># cd ..
+# tar -zvxf php-5.5.14.tar.gz
+# cd php-5.5.14
+# export LD_LIBRARY_PATH=/usr/local/libgd/lib
+# ./configure --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --with-mysql=/usr/local/mysql --with-mysqli=/usr/local/mysql/bin/mysql_config --with-mysql-sock=/tmp/mysql.sock --with-pdo-mysql=/usr/local/mysql --with-gd --with-png-dir=/usr/local/libpng --with-jpeg-dir=/usr/local/jpeg --with-freetype-dir=/usr/local/freetype --with-xpm-dir=/usr/ --with-vpx-dir=/usr/local/libvpx/ --with-zlib-dir=/usr/local/zlib --with-t1lib=/usr/local/t1lib --with-iconv --enable-libxml --enable-xml --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --enable-opcache --enable-mbregex --enable-fpm --enable-mbstring --enable-ftp --enable-gd-native-ttf --with-openssl --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --without-pear --with-gettext --enable-session --with-mcrypt --with-curl --enable-ctype
+# make
+# make install
+</code></pre><h3 id="修改php配置文件"><a href="#修改php配置文件" class="headerlink" title="修改php配置文件"></a>修改php配置文件</h3><pre><code># rm -rf /etc/php.ini
+# ln -s /usr/local/php/etc/php.ini /etc/php.ini
+# cp php.ini-production /usr/local/php/etc/php.ini
+# cp /usr/local/php/etc/php-fpm.conf.default /usr/local/php/etc/php-fpm.conf
+# ln -s /usr/local/php/etc/php-fpm.conf /etc/php-fpm.conf
+</code></pre><h3 id="修改php-fpm-conf文件"><a href="#修改php-fpm-conf文件" class="headerlink" title="修改php-fpm.conf文件"></a>修改php-fpm.conf文件</h3><p>分别将第148和149行的user与group参数分别修改为www账户和用户组名称</p>
+<pre><code># vi /usr/local/php/etc/php-fpm.conf
+</code></pre><p><img src="http://p8urkh0xe.bkt.clouddn.com/18-5-28/61643236.jpg" alt=""></p>
+<h3 id="把php-fpm服务程序加入到开机启动项"><a href="#把php-fpm服务程序加入到开机启动项" class="headerlink" title="把php-fpm服务程序加入到开机启动项"></a>把php-fpm服务程序加入到开机启动项</h3><p>为了能够执行脚本，为脚本赋予755权限。</p>
+<pre><code># cp sapi/fpm/init.d.php-fpm /etc/rc.d/init.d/php-fpm
+# chmod 755 /etc/rc.d/init.d/php-fpm
+# chkconfig php-fpm on
+</code></pre><h3 id="修改php-ini配置文件"><a href="#修改php-ini配置文件" class="headerlink" title="修改php.ini配置文件"></a>修改php.ini配置文件</h3><p>在305行的disable_functions参数后面追加上要禁止的功能</p>
+<pre><code># vi /usr/local/php/etc/php.ini
+</code></pre><p><img src="http://p8urkh0xe.bkt.clouddn.com/18-5-28/83415991.jpg" alt=""></p>
+<h2 id="0x07-修改Nginx配置文件"><a href="#0x07-修改Nginx配置文件" class="headerlink" title="0x07 修改Nginx配置文件"></a>0x07 修改Nginx配置文件</h2><pre><code># vi /usr/local/nginx/conf/nginx.conf
+</code></pre><p>把第2行的注释删除，然后在后面写上负责运行Nginx服务程序的账户名称和用户组名称</p>
+<p><img src="http://p8urkh0xe.bkt.clouddn.com/18-5-28/93653711.jpg" alt=""></p>
+<p>在第45行的index参数后面写上网站的首页名称</p>
+<p><img src="http://p8urkh0xe.bkt.clouddn.com/18-5-28/52311967.jpg" alt=""></p>
+<p>将第65～71行参数前的注释删除来启用参数，主要是修改第69行的脚本名称路径参数，其中$document_root变量即为网站信息存储的根目录路径，若没有设置该变量，则Nginx服务程序无法找到网站信息，因此会提示“404页面未找到”的报错信息</p>
+<p><img src="http://p8urkh0xe.bkt.clouddn.com/18-5-28/73622794.jpg" alt=""></p>
+<p>在确认参数信息填写正确后便可重启Nginx服务与php-fpm服务</p>
+<h2 id="0x08-重启服务"><a href="#0x08-重启服务" class="headerlink" title="0x08 重启服务"></a>0x08 重启服务</h2><pre><code># systemctl restart nginx
+# systemctl restart php-fpm
+</code></pre><p>到了这一步LNMP环境就搭建完成了</p>
+<h2 id="0x09-测试"><a href="#0x09-测试" class="headerlink" title="0x09 测试"></a>0x09 测试</h2><p>为了测试LNMP环境搭建是否妥当，部署Discuz!系统</p>
+<p>1).解压dz</p>
+<pre><code># cd /usr/local/src/
+# unzip Discuz_X3.2_SC_GBK.zip
+</code></pre><p>2).将文件放在服务器目录</p>
+<p>解压后会在当前目录中出现一个名为upload的文件目录，这里面保存的就是Discuz！论坛的系统程序。把Nginx服务程序网站根目录的内容清空后，就可以把这些这个目录中的文件都复制进去</p>
+<pre><code># # rm -rf /usr/local/nginx/html/{index.html,50x.html}*
+# mv upload/* /usr/local/nginx/html/
+</code></pre><p>3).修改属主和权限</p>
+<p>把Nginx服务程序的网站根目录的所有者和所属组修改为本地的www用户,并赋予755权限以便于能够读、写、执行该论坛系统内的文件</p>
+<pre><code># chown -Rf www:www /usr/local/nginx/html
+# chmod -Rf 755 /usr/local/nginx/html
+</code></pre><p>4).在浏览器输入http://服务器ip/install/开始安装</p>
+<p>5).确保当前状态都是可写，然后进行下一步</p>
+<p><img src="http://p8urkh0xe.bkt.clouddn.com/18-5-28/53416616.jpg" alt=""></p>
+<p>6).选择“全新安装Discuz! X（含UCenter Server）”,后面填写要求的信息</p>
+<p>7).安装成功，说明</p>
+<p><img src="http://p8urkh0xe.bkt.clouddn.com/18-5-28/71975436.jpg" alt=""></p>
+<p>既然环境没有问题.接下就是搭建练习平台了。</p>
+<h3 id="未经本人允许，禁止转载"><a href="#未经本人允许，禁止转载" class="headerlink" title="*未经本人允许，禁止转载"></a>*未经本人允许，禁止转载</h3>
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/05/25/kvm-deploy/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">CentOS7下部署KVM以及virsh常用命令</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2018 Peithon
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/smackgg/hexo-theme-smackdown" target="_blank">Smackdown</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="/js/main.js"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
+
+
+  </div>
+</body>
+</html>
