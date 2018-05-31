@@ -9,20 +9,20 @@
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="每一台服务器基本都会配置ssh服务，但是如果我们不对ssh进行安全防护，就相当于给入侵者提供了一个入侵途径。所以对ssh进行一些安全配置十分重要。ssh日志文件:/var/log/secure">
+  <meta name="description" content="每一台服务器基本都会配置ssh服务，但是如果我们不对ssh进行安全防护，就相当于给入侵者提供了一个入侵途径。所以对ssh进行一些安全配置十分重要。">
 <meta name="keywords" content="密钥登录,ssh安全加固">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ssh安全加固">
 <meta property="og:url" content="http://yoursite.com/2018/05/31/ssh-safety/index.html">
 <meta property="og:site_name" content="Peithon&#39;s Blog">
-<meta property="og:description" content="每一台服务器基本都会配置ssh服务，但是如果我们不对ssh进行安全防护，就相当于给入侵者提供了一个入侵途径。所以对ssh进行一些安全配置十分重要。ssh日志文件:/var/log/secure">
+<meta property="og:description" content="每一台服务器基本都会配置ssh服务，但是如果我们不对ssh进行安全防护，就相当于给入侵者提供了一个入侵途径。所以对ssh进行一些安全配置十分重要。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-5-31/87667089.jpg">
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-5-31/35258433.jpg">
-<meta property="og:updated_time" content="2018-05-31T07:53:32.596Z">
+<meta property="og:updated_time" content="2018-05-31T07:57:46.612Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ssh安全加固">
-<meta name="twitter:description" content="每一台服务器基本都会配置ssh服务，但是如果我们不对ssh进行安全防护，就相当于给入侵者提供了一个入侵途径。所以对ssh进行一些安全配置十分重要。ssh日志文件:/var/log/secure">
+<meta name="twitter:description" content="每一台服务器基本都会配置ssh服务，但是如果我们不对ssh进行安全防护，就相当于给入侵者提供了一个入侵途径。所以对ssh进行一些安全配置十分重要。">
 <meta name="twitter:image" content="http://p8urkh0xe.bkt.clouddn.com/18-5-31/87667089.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Peithon&#39;s Blog" type="application/atom+xml">
@@ -248,8 +248,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>每一台服务器基本都会配置ssh服务，但是如果我们不对ssh进行安全防护，就相当于给入侵者提供了一个入侵途径。所以对ssh进行一些安全配置十分重要。ssh日志文件:<code>/var/log/secure</code><br><a id="more"></a></p>
+        <p>每一台服务器基本都会配置ssh服务，但是如果我们不对ssh进行安全防护，就相当于给入侵者提供了一个入侵途径。所以对ssh进行一些安全配置十分重要。<br><a id="more"></a></p>
 <h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>ssh服务的配置文件:<code>/etc/ssh/sshd_config</code></p>
+<p>ssh日志文件:<code>/var/log/secure</code></p>
 <h2 id="0x01-更换ssh服务的端口"><a href="#0x01-更换ssh服务的端口" class="headerlink" title="0x01 更换ssh服务的端口"></a>0x01 更换ssh服务的端口</h2><p>ssh服务默认是22端口，修改的时候如果系统的SELinux是开启的话是不会成功的，会报以下的错误。端口</p>
 <p><img src="http://p8urkh0xe.bkt.clouddn.com/18-5-31/87667089.jpg" alt=""></p>
 <p>因为SELinux开启时不ssh在另一个端口运行</p>
