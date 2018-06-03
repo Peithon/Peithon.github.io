@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Linux内核引发的Docker安装失败问题 | Peithon&#39;s Blog</title>
+
+  <!-- keywords -->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在阿里云的服务器上我搭建好了docker环境，今天想在自己的CentOS7虚拟机中在安装一个docker，问题就随着出现了。这个问题花费了好几天的时间，不过最后总算解决了。">
+<meta name="keywords" content="Linux内核,CentOS7">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux内核引发的Docker安装失败问题">
+<meta property="og:url" content="http://yoursite.com/2018/06/03/linux-kernel/index.html">
+<meta property="og:site_name" content="Peithon&#39;s Blog">
+<meta property="og:description" content="在阿里云的服务器上我搭建好了docker环境，今天想在自己的CentOS7虚拟机中在安装一个docker，问题就随着出现了。这个问题花费了好几天的时间，不过最后总算解决了。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-6-3/33522869.jpg">
+<meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-6-3/60446910.jpg">
+<meta property="og:updated_time" content="2018-06-03T04:54:10.038Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux内核引发的Docker安装失败问题">
+<meta name="twitter:description" content="在阿里云的服务器上我搭建好了docker环境，今天想在自己的CentOS7虚拟机中在安装一个docker，问题就随着出现了。这个问题花费了好几天的时间，不过最后总算解决了。">
+<meta name="twitter:image" content="http://p8urkh0xe.bkt.clouddn.com/18-6-3/33522869.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="Peithon&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://p8urkh0xe.bkt.clouddn.com/touxiang.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+  
+
+  <script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+  
+      <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("YV6LWh5W8UQ3bQKoo628fNVK-gzGzoHsz", "SnDWsQ8dkIu3YguxR8PB7ok5");</script>
+<script src="/js/Counter.js"></script>
+
+  
+</head>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://p8urkh0xe.bkt.clouddn.com/touxiang.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Peithon</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CentOS7/" style="font-size: 10px;">CentOS7</a> <a href="/tags/Centos7网络配置/" style="font-size: 10px;">Centos7网络配置</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux内核/" style="font-size: 10px;">Linux内核</a> <a href="/tags/ftp常用命令/" style="font-size: 10px;">ftp常用命令</a> <a href="/tags/ftp的搭建/" style="font-size: 10px;">ftp的搭建</a> <a href="/tags/kvm虚拟化/" style="font-size: 10px;">kvm虚拟化</a> <a href="/tags/lnmp搭建/" style="font-size: 10px;">lnmp搭建</a> <a href="/tags/ssh安全加固/" style="font-size: 10px;">ssh安全加固</a> <a href="/tags/ssh服务/" style="font-size: 10px;">ssh服务</a> <a href="/tags/tigervnc安装/" style="font-size: 10px;">tigervnc安装</a> <a href="/tags/virsh常用命令/" style="font-size: 10px;">virsh常用命令</a> <a href="/tags/密钥登录/" style="font-size: 10px;">密钥登录</a> <a href="/tags/建立虚拟用户/" style="font-size: 10px;">建立虚拟用户</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://cherrygk.github.io/">cherrygk渗透大佬</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://ssssdl.github.io">ssssdl XSS大佬</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Peithon</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://p8urkh0xe.bkt.clouddn.com/touxiang.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Peithon</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-linux-kernel" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/06/03/linux-kernel/" class="article-date">
+  	<time datetime="2018-06-03T04:46:38.000Z" itemprop="datePublished">2018-06-03</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Linux内核引发的Docker安装失败问题
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS7/">CentOS7</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux内核/">Linux内核</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/docker/">docker</a>
+	</div>
+
+
+        
+          
+<div class="counter-tag counter">
+    <span id="/2018/06/03/linux-kernel/" class="leancloud_visitors post-title-link"
+          style="font-size: 12px" data-flag-title="Linux内核引发的Docker安装失败问题">
+         &nbsp;
+        view
+    </span>
+</div>
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在阿里云的服务器上我搭建好了docker环境，今天想在自己的CentOS7虚拟机中在安装一个docker，问题就随着出现了。这个问题花费了好几天的时间，不过最后总算解决了。<br><a id="more"></a><br>我将Docker的一些笔记放在了CSDN账号上，都是一些比较基础的<a href="https://blog.csdn.net/qq_39629343/article/category/7631394" target="_blank" rel="noopener">docker学习笔记</a>。</p>
+<p>软件环境:</p>
+<pre><code>操作系统: CentOS7
+内核版本：3.10.0-514
+其他：VMware14
+</code></pre><p>出现的问题：</p>
+<pre><code>Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+</code></pre><p>我的yum源都是换过的，没有使用CentOS7自带的yum源。替换成阿里云源了</p>
+<p>Docker守护进程JSON配置文件: <code>/etc/docker/daemon.json</code></p>
+<p>Docker守护进程数据保存目录: <code>/var/lib/docker</code></p>
+<p>Docker守护进程日志: <code>/var/log/messages</code></p>
+<p>Docker守护进程默认监听的Unix域套接字：<code>/var/run/docker.sock</code></p>
+<h2 id="0x01-安装docker"><a href="#0x01-安装docker" class="headerlink" title="0x01 安装docker"></a>0x01 安装docker</h2><pre><code>[admin@localhost ~]$ sudo yum install -y docker
+[admin@localhost ~]$ docker -v
+Docker version 1.13.1, build 94f4240/1.13.1
+[admin@localhost ~]$ sudo docker info
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+</code></pre><p>这个时候就出现了问题，百度Google了很多，都没有找到合适的解决办法。</p>
+<h2 id="0x02-查看docker-daemon有没有运行"><a href="#0x02-查看docker-daemon有没有运行" class="headerlink" title="0x02 查看docker daemon有没有运行"></a>0x02 查看docker daemon有没有运行</h2><pre><code>[admin@localhost ~]$ ps aux | grep docker
+admin      4319  0.0  0.0 112664   972 pts/0    R+   18:57   0:00 grep --color=auto docker
+</code></pre><p>可以判断docker daemon是没有运行的</p>
+<h2 id="0x03-手动启动守护程序"><a href="#0x03-手动启动守护程序" class="headerlink" title="0x03 手动启动守护程序"></a>0x03 手动启动守护程序</h2><pre><code>[admin@localhost log]$ dockerd
+INFO[0000] libcontainerd: new containerd process, pid: 4521 
+WARN[0000] containerd: low RLIMIT_NOFILE changing to max  current=1024 max=4096
+INFO[0001] [graphdriver] using prior storage driver: overlay2 
+INFO[0001] Graph migration to content-addressability took 0.00 seconds 
+INFO[0001] Loading containers: start.                   
+INFO[0001] Firewalld running: true                      
+INFO[0001] Default bridge (docker0) is assigned with an IP address 172.17.0.0/16. Daemon option --bip can be used to set a preferred IP address 
+INFO[0001] Loading containers: done.                    
+WARN[0001] Not using native diff for overlay2, this may cause degraded performance for building images: opaque flag erroneously copied up, consider update to kernel 4.8 or later to fix 
+WARN[0001] failed to retrieve docker-runc version: exec: &quot;docker-runc&quot;: executable file not found in $PATH 
+WARN[0001] failed to retrieve docker-init version       
+INFO[0001] Daemon has completed initialization          
+INFO[0001] Docker daemon                                 commit=&quot;94f4240/1.13.1&quot; graphdriver=overlay2 version=1.13.1
+INFO[0001] API listen on /var/run/docker.sock           
+</code></pre><p>这些是之前的记录，然后再开一个终端，再次查看一遍信息，在新开的终端输入:<code>sudo docker info</code></p>
+<p>新终端:</p>
+<pre><code>Containers: 0
+ Running: 0
+ Paused: 0
+ Stopped: 0
+Images: 0
+Server Version: 1.13.1
+Storage Driver: overlay2
+ Backing Filesystem: xfs
+ Supports d_type: true
+ Native Overlay Diff: false
+Logging Driver: json-file
+Cgroup Driver: cgroupfs
+Plugins: 
+ Volume: local
+ Network: bridge host macvlan null overlay
+Swarm: inactive
+Runtimes: runc
+Default Runtime: runc
+Init Binary: docker-init
+containerd version:  (expected: aa8187dbd3b7ad67d8e5e3a15115d3eef43a7ed1)
+runc version: N/A (expected: 9df8b306d01f59d3a8029be411de015b7304dd8f)
+init version: N/A (expected: 949e6facb77383876aeff8a6944dde66b3089574)
+Security Options:
+ seccomp
+  Profile: default
+Kernel Version: 3.10.0-514.el7.x86_64
+Operating System: CentOS Linux 7 (Core)
+OSType: linux
+Architecture: x86_64
+Number of Docker Hooks: 3
+CPUs: 1
+Total Memory: 976.5 MiB
+Name: localhost.localdomain
+ID: QA5O:XAFA:Y6MT:P7HC:HR6A:YFQ5:QITP:EDNR:6IMA:THF7:UKBE:CUD5
+Docker Root Dir: /var/lib/docker
+Debug Mode (client): false
+Debug Mode (server): false
+Registry: https://index.docker.io/v1/
+Experimental: false
+Insecure Registries:
+ 127.0.0.0/8
+Live Restore Enabled: false
+Registries: docker.io (secure)
+</code></pre><p>守护进程所在终端:</p>
+<pre><code>INFO[0000] libcontainerd: new containerd process, pid: 4521 
+WARN[0000] containerd: low RLIMIT_NOFILE changing to max  current=1024 max=4096
+INFO[0001] [graphdriver] using prior storage driver: overlay2 
+INFO[0001] Graph migration to content-addressability took 0.00 seconds 
+INFO[0001] Loading containers: start.                   
+INFO[0001] Firewalld running: true                      
+INFO[0001] Default bridge (docker0) is assigned with an IP address 172.17.0.0/16. Daemon option --bip can be used to set a preferred IP address 
+INFO[0001] Loading containers: done.                    
+WARN[0001] Not using native diff for overlay2, this may cause degraded performance for building images: opaque flag erroneously copied up, consider update to kernel 4.8 or later to fix 
+WARN[0001] failed to retrieve docker-runc version: exec: &quot;docker-runc&quot;: executable file not found in $PATH 
+WARN[0001] failed to retrieve docker-init version       
+INFO[0001] Daemon has completed initialization          
+INFO[0001] Docker daemon                                 commit=&quot;94f4240/1.13.1&quot; graphdriver=overlay2 version=1.13.1
+INFO[0001] API listen on /var/run/docker.sock           
+WARN[0050] failed to retrieve docker-runc version: exec: &quot;docker-runc&quot;: executable file not found in $PATH 
+WARN[0050] failed to retrieve docker-init version  
+</code></pre><h2 id="0x04-查看日志"><a href="#0x04-查看日志" class="headerlink" title="0x04 查看日志"></a>0x04 查看日志</h2><pre><code>[admin@localhost ~]$ sudo cat /var/log/messages
+
+May 31 19:21:09 localhost dbus[660]: [system] Activating via systemd: service name=&apos;net.reactivated.Fprint&apos; unit=&apos;fprintd.service&apos;
+May 31 19:21:09 localhost dbus-daemon: dbus[660]: [system] Activating via systemd: service name=&apos;net.reactivated.Fprint&apos; unit=&apos;fprintd.service&apos;
+May 31 19:21:09 localhost systemd: Starting Fingerprint Authentication Daemon...
+May 31 19:21:09 localhost dbus[660]: [system] Successfully activated service &apos;net.reactivated.Fprint&apos;
+May 31 19:21:09 localhost dbus-daemon: dbus[660]: [system] Successfully activated service &apos;net.reactivated.Fprint&apos;
+May 31 19:21:09 localhost systemd: Started Fingerprint Authentication Daemon.
+May 31 19:21:09 localhost fprintd: Launching FprintObject
+May 31 19:21:09 localhost fprintd: ** Message: D-Bus service launched with name: net.reactivated.Fprint
+May 31 19:21:09 localhost fprintd: ** Message: entering main loop
+May 31 19:21:39 localhost fprintd: ** Message: No devices in use, exit
+</code></pre><p>没有看出什么问题</p>
+<h2 id="0x05-启动docker"><a href="#0x05-启动docker" class="headerlink" title="0x05 启动docker"></a>0x05 启动docker</h2><pre><code>$ systemctl start docker    //没有启动成功
+$ journalctl -xe
+
+-- Unit docker.service has begun starting up.
+6月 03 11:18:42 localhost.localdomain dockerd-current[50448]: time=&quot;2018-06-03T11:18:42.746059974+08:00&quot; level=info msg=&quot;libcontainerd: new containerd process, pid: 50453&quot;
+6月 03 11:18:44 localhost.localdomain dockerd-current[50448]: Error starting daemon: SELinux is not supported with the overlay2 graph driver on this kernel. Either boot into a new
+6月 03 11:18:44 localhost.localdomain systemd[1]: docker.service: main process exited, code=exited, status=1/FAILURE
+6月 03 11:18:44 localhost.localdomain systemd[1]: Failed to start Docker Application Container Engine.
+-- Subject: Unit docker.service has failed
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit docker.service has failed.
+-- 
+-- The result is failed.
+6月 03 11:18:44 localhost.localdomain systemd[1]: Unit docker.service entered failed state.
+6月 03 11:18:44 localhost.localdomain systemd[1]: docker.service failed.
+6月 03 11:18:44 localhost.localdomain polkitd[648]: Unregistered Authentication Agent for unix-process:50367:23334872 (system bus name :1.1153, object path /org/freedesktop/Policy
+6月 03 11:19:07 localhost.localdomain fprintd[50383]: ** Message: No devices in use, exit
+</code></pre><p>SELinux不支持这个内核上的overlay2图形驱动程序，终于找到了问题所在，原来是内核不支持，我用的是3.10.0-514的内核，所以将内核升级就可以了</p>
+<h2 id="0x06-升级内核—解决方法"><a href="#0x06-升级内核—解决方法" class="headerlink" title="0x06 升级内核—解决方法"></a>0x06 升级内核—解决方法</h2><p>1).导入ELRepo软件仓库的公共秘钥</p>
+<pre><code>$ sudo rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+</code></pre><p>2).安装ELRepo软件仓库的yum源</p>
+<pre><code>$ sudo rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
+</code></pre><p>3).安装主线内核（ml=mainline）</p>
+<pre><code>$ sudo yum --enablerepo=elrepo-kernel install kernel-ml
+</code></pre><p>4).重启系统</p>
+<pre><code>$ reboot
+</code></pre><p>5).选择进入4.16.13-1.e17内核的系统</p>
+<p><img src="http://p8urkh0xe.bkt.clouddn.com/18-6-3/33522869.jpg" alt=""></p>
+<p>6).查看内核以及docker信息</p>
+<pre><code>$ uname -r
+$ systemctl start docker
+$ docker info
+</code></pre><p><img src="http://p8urkh0xe.bkt.clouddn.com/18-6-3/60446910.jpg" alt=""></p>
+<p>现在docker就可以正常使用了</p>
+<h2 id="0x07-出现该问题的因素"><a href="#0x07-出现该问题的因素" class="headerlink" title="0x07 出现该问题的因素"></a>0x07 出现该问题的因素</h2><h3 id="1-docker没有启动"><a href="#1-docker没有启动" class="headerlink" title="1.docker没有启动"></a>1.docker没有启动</h3><pre><code>$ systemctl start docker
+</code></pre><h3 id="2-该系统的内核不支持"><a href="#2-该系统的内核不支持" class="headerlink" title="2.该系统的内核不支持"></a>2.该系统的内核不支持</h3><pre><code>升级内核
+</code></pre><h3 id="3-用户没有管理docker的权限"><a href="#3-用户没有管理docker的权限" class="headerlink" title="3.用户没有管理docker的权限"></a>3.用户没有管理docker的权限</h3><pre><code>$ sudo docker info
+</code></pre><p>或者创建一个docker用户组，将该普通用户加入到docker组中，这样用户就可以管理docker了。</p>
+<pre><code>$ sudo groupadd docker
+$ sudo usermod -aG docker admin
+</code></pre><p>目前所了解就这三个因素，如果有其他因素以后碰到会再来补充。</p>
+<h2 id="0x08-总结"><a href="#0x08-总结" class="headerlink" title="0x08 总结"></a>0x08 总结</h2><p>但是没有及时查看Docker的状态，这也是花费这么长时间的原因之一，还有就是对Docker的守护进程以及套接字之间理解的不是很好，所以出现问题才会没有清晰的排查思路，通过这次问题的解决，的确让我对Docker套接字还有守护进程之类的加深了理解。所以我相信，只要能够不断解决问题，在学习上就能学的更多，理解的更透彻。</p>
+<h3 id="未经本人允许，禁止转载"><a href="#未经本人允许，禁止转载" class="headerlink" title="*未经本人允许，禁止转载"></a>*未经本人允许，禁止转载</h3>
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/05/31/ssh-safety/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ssh安全加固</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2018 Peithon
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/smackgg/hexo-theme-smackdown" target="_blank">Smackdown</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="/js/main.js"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
+
+
+  </div>
+</body>
+</html>
