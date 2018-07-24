@@ -35,7 +35,7 @@
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-7-21/17405184.jpg">
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-7-21/30524912.jpg">
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-7-21/3341134.jpg">
-<meta property="og:updated_time" content="2018-07-21T18:42:32.645Z">
+<meta property="og:updated_time" content="2018-07-24T21:04:42.047Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker搭建Web测试环境一般步骤及相关命令总结">
 <meta name="twitter:description" content="0x00 前言最近学习Docker中web环境的搭建，所以记录一下搭建过程中需要用到的命令以及相关步骤，本次搭建的数据库是从别的主机导出来的，所以还会涉及到一点SQL文件的导入和导出相关操作。">
@@ -355,7 +355,9 @@ lead4good/lamp-mysql                   LAMP-Stack MySQL                         
 <h2 id="0x07-上传到Docker-Hub上"><a href="#0x07-上传到Docker-Hub上" class="headerlink" title="0x07 上传到Docker Hub上"></a>0x07 上传到Docker Hub上</h2><h3 id="1-标记镜像"><a href="#1-标记镜像" class="headerlink" title="1). 标记镜像"></a>1). 标记镜像</h3><p><strong><em>docker tag image username/repository:tag</em></strong></p>
 <pre><code>[root@Peithon ~]# docker tag ubuntu:web500 peithon/ubuntu:web500
 </code></pre><p><img src="http://p8urkh0xe.bkt.clouddn.com/18-7-21/17405184.jpg" alt=""></p>
-<h3 id="2-将标记镜像上传到存储库"><a href="#2-将标记镜像上传到存储库" class="headerlink" title="2).将标记镜像上传到存储库"></a>2).将标记镜像上传到存储库</h3><p><strong><em>docker push username/repository:tag</em></strong></p>
+<h3 id="2-Docker-Hub账号登录"><a href="#2-Docker-Hub账号登录" class="headerlink" title="2).Docker Hub账号登录"></a>2).Docker Hub账号登录</h3><pre><code>[root@Peithon ~]# docker login
+</code></pre><p>然后输入用户密码，登录成功之后将镜像标记然后上传。</p>
+<h3 id="3-将标记镜像上传到存储库"><a href="#3-将标记镜像上传到存储库" class="headerlink" title="3).将标记镜像上传到存储库"></a>3).将标记镜像上传到存储库</h3><p><strong><em>docker push username/repository:tag</em></strong></p>
 <pre><code>[root@Peithon ~]# docker push peithon/ubuntu:web500
 </code></pre><p><img src="http://p8urkh0xe.bkt.clouddn.com/18-7-21/30524912.jpg" alt=""></p>
 <p>登录到Docker Hub上查看是否上传成功</p>
