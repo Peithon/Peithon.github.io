@@ -3,23 +3,31 @@
 <head>
   <meta charset="utf-8">
   
-  <title>All categories | Peithon&#39;s Blog</title>
+  <title>apache虚拟主机配置-基于端口 | Peithon&#39;s Blog</title>
 
   <!-- keywords -->
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一些笔记和学习记录">
-<meta property="og:type" content="website">
-<meta property="og:title" content="All categories">
-<meta property="og:url" content="http://yoursite.com/categories/index.html">
+  <meta name="description" content="0x00 前言配置Apache虚拟主机，主要是监听端口，编写虚拟主机配置文件，开放端口，还有就是将web站点的目录建好。">
+<meta name="keywords" content="多端口,vhosts">
+<meta property="og:type" content="article">
+<meta property="og:title" content="apache虚拟主机配置-基于端口">
+<meta property="og:url" content="http://yoursite.com/2018/08/11/httpd-vhosts/index.html">
 <meta property="og:site_name" content="Peithon&#39;s Blog">
-<meta property="og:description" content="一些笔记和学习记录">
+<meta property="og:description" content="0x00 前言配置Apache虚拟主机，主要是监听端口，编写虚拟主机配置文件，开放端口，还有就是将web站点的目录建好。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-21T11:23:15.400Z">
+<meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-8-11/9452670.jpg">
+<meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-8-11/52946496.jpg">
+<meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-8-11/95888125.jpg">
+<meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-8-11/80399711.jpg">
+<meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-8-11/35385086.jpg">
+<meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-8-11/34145704.jpg">
+<meta property="og:updated_time" content="2018-08-11T14:09:55.929Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="All categories">
-<meta name="twitter:description" content="一些笔记和学习记录">
+<meta name="twitter:title" content="apache虚拟主机配置-基于端口">
+<meta name="twitter:description" content="0x00 前言配置Apache虚拟主机，主要是监听端口，编写虚拟主机配置文件，开放端口，还有就是将web站点的目录建好。">
+<meta name="twitter:image" content="http://p8urkh0xe.bkt.clouddn.com/18-8-11/9452670.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Peithon&#39;s Blog" type="application/atom+xml">
   
@@ -191,11 +199,11 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-httpd-vhosts" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/categories/index.html" class="article-date">
-  	<time datetime="2018-05-17T10:44:14.000Z" itemprop="datePublished">2018-05-17</time>
+      <a href="/2018/08/11/httpd-vhosts/" class="article-date">
+  	<time datetime="2018-08-11T14:03:43.000Z" itemprop="datePublished">2018-08-11</time>
 </a>
     </div>
   
@@ -208,7 +216,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      All categories
+      apache虚拟主机配置-基于端口
       
     </h1>
   
@@ -217,13 +225,21 @@
       
       <div class="article-info article-info-post">
         
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vhosts/">vhosts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多端口/">多端口</a></li></ul>
+	</div>
+
         
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Linux/">Linux</a>
+	</div>
+
 
         
           
 <div class="counter-tag counter">
-    <span id="/categories/index.html" class="leancloud_visitors post-title-link"
-          style="font-size: 12px" data-flag-title="All categories">
+    <span id="/2018/08/11/httpd-vhosts/" class="leancloud_visitors post-title-link"
+          style="font-size: 12px" data-flag-title="apache虚拟主机配置-基于端口">
          &nbsp;
         view
     </span>
@@ -236,13 +252,65 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>配置Apache虚拟主机，主要是监听端口，编写虚拟主机配置文件，开放端口，还有就是将web站点的目录建好。<br><a id="more"></a></p>
+<h2 id="0x01-监听端口8001"><a href="#0x01-监听端口8001" class="headerlink" title="0x01 监听端口8001"></a>0x01 监听端口8001</h2><p>修改Apache的配置文件，监听8001端口，这是用于对外进行站点访问的端口。</p>
+<pre><code>vi /etc/httpd/conf/httpd.conf
+</code></pre><p><img src="http://p8urkh0xe.bkt.clouddn.com/18-8-11/9452670.jpg" alt=""></p>
+<h2 id="0x02-编写虚拟主机配置文件"><a href="#0x02-编写虚拟主机配置文件" class="headerlink" title="0x02 编写虚拟主机配置文件"></a>0x02 编写虚拟主机配置文件</h2><pre><code>vi /etc/httpd/conf.d/vhosts.conf
+</code></pre><p>添加以下内容：</p>
+<pre><code>&lt;VirtualHost *:端口号&gt;
+
+#ServerName www.***.com #域名
+DocumentRoot /var/www/html/web #网站目录,自己定                 
+ErrorLog &quot;/var/log/httpd/web/error_log&quot;            
+CustomLog &quot;/var/log/httpd/web/access_log&quot; combined  
+&lt;Directory &quot;/var/www/html/web&quot;&gt;
+
+Options -Indexes +Includes +FollowSymLinks +MultiViews
+AllowOverride All
+Require all granted            
+
+&lt;/Directory&gt;
+
+&lt;/VirtualHost&gt;
+</code></pre><p>这是我在服务器上的配置:</p>
+<p><img src="http://p8urkh0xe.bkt.clouddn.com/18-8-11/52946496.jpg" alt=""></p>
+<h2 id="0x03-添加目录"><a href="#0x03-添加目录" class="headerlink" title="0x03 添加目录"></a>0x03 添加目录</h2><pre><code>mkdir -pv /var/log/httpd/test
+mkdir -pv /var/www/test
+</code></pre><h2 id="0x04-修改-etc-httpd-conf-d-welcome-conf文件"><a href="#0x04-修改-etc-httpd-conf-d-welcome-conf文件" class="headerlink" title="0x04 修改/etc/httpd/conf.d/welcome.conf文件"></a>0x04 修改<code>/etc/httpd/conf.d/welcome.conf</code>文件</h2><p>这个文件是apache的测试文件，所以我们这里将该文件内容全部注释掉</p>
+<p><img src="http://p8urkh0xe.bkt.clouddn.com/18-8-11/95888125.jpg" alt=""></p>
+<p><strong>为什么<code>httpd.conf</code>配置文件可以加载<code>welcome.conf</code>和<code>vhosts.conf</code>文件呢？</strong></p>
+<p>原因很简单,因为<code>httpd.conf</code>的最后有这样一行代码</p>
+<p><img src="http://p8urkh0xe.bkt.clouddn.com/18-8-11/80399711.jpg" alt=""></p>
+<p>这一行代码会使Apache配置文件将<code>/etc/httpd/conf.d</code>目录下的<code>.conf</code>文件给包含，所以可以读取到我们新建的<code>vhost.conf</code>文件。</p>
+<h2 id="0x04-重启apache服务-执行其中一个即可"><a href="#0x04-重启apache服务-执行其中一个即可" class="headerlink" title="0x04 重启apache服务(执行其中一个即可)"></a>0x04 重启apache服务(执行其中一个即可)</h2><pre><code>systemctl restart httpd
+/etc/init.d/httpd restart
+</code></pre><h2 id="0x05-开放端口，注意把SELinux关闭"><a href="#0x05-开放端口，注意把SELinux关闭" class="headerlink" title="0x05 开放端口，注意把SELinux关闭"></a>0x05 开放端口，注意把SELinux关闭</h2><pre><code>#永久生效加上 --permanent
+firewall-cmd --zone=public --add-port=8001/tcp --permanent
+</code></pre><h2 id="0x06-测试"><a href="#0x06-测试" class="headerlink" title="0x06 测试"></a>0x06 测试</h2><p>编写一个<code>index.html</code>进行测试</p>
+<pre><code>echo &quot;hello,this is test page&quot; &gt; /var/www/test/index.html
+</code></pre><p>使用<code>curl</code>访问页面</p>
+<p><img src="http://p8urkh0xe.bkt.clouddn.com/18-8-11/35385086.jpg" alt=""></p>
+<p>同时我们可以在<code>test</code>的访问成功的日志<code>access_log</code>中看到相关信息</p>
+<p><img src="http://p8urkh0xe.bkt.clouddn.com/18-8-11/34145704.jpg" alt=""></p>
+<p><strong>如果想在不同的端口配置不同目录下的站点，可以在<code>httpd.conf</code>中添加相应端口，在<code>vhosts.conf</code>文件中添加相应站点信息，然后再防火墙中将端口开放，这样就可以实现同IP多端口的多个Web站点</strong></p>
+<h3 id="未经本人允许，禁止转载"><a href="#未经本人允许，禁止转载" class="headerlink" title="*未经本人允许，禁止转载"></a>*未经本人允许，禁止转载</h3>
       
     </div>
     
   </div>
   
     
+<nav id="article-nav">
+  
+  
+    <a href="/2018/07/22/docker-bridge-test/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Docker搭建Web测试环境一般步骤及相关命令总结</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
   
 </article>
 
@@ -275,7 +343,7 @@
 		mathjax: true,
 		animate: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
