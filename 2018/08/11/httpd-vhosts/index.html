@@ -23,7 +23,7 @@
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-8-11/80399711.jpg">
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-8-11/35385086.jpg">
 <meta property="og:image" content="http://p8urkh0xe.bkt.clouddn.com/18-8-11/34145704.jpg">
-<meta property="og:updated_time" content="2018-08-11T14:09:55.929Z">
+<meta property="og:updated_time" content="2018-08-11T14:13:02.030Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="apache虚拟主机配置-基于端口">
 <meta name="twitter:description" content="0x00 前言配置Apache虚拟主机，主要是监听端口，编写虚拟主机配置文件，开放端口，还有就是将web站点的目录建好。">
@@ -282,7 +282,7 @@ mkdir -pv /var/www/test
 <p><strong>为什么<code>httpd.conf</code>配置文件可以加载<code>welcome.conf</code>和<code>vhosts.conf</code>文件呢？</strong></p>
 <p>原因很简单,因为<code>httpd.conf</code>的最后有这样一行代码</p>
 <p><img src="http://p8urkh0xe.bkt.clouddn.com/18-8-11/80399711.jpg" alt=""></p>
-<p>这一行代码会使Apache配置文件将<code>/etc/httpd/conf.d</code>目录下的<code>.conf</code>文件给包含，所以可以读取到我们新建的<code>vhost.conf</code>文件。</p>
+<p>这一行代码会使Apache配置文件将<code>/etc/httpd/conf.d</code>目录下的<code>.conf</code>文件给包含，所以可以读取到我们新建的<code>vhosts.conf</code>文件。</p>
 <h2 id="0x04-重启apache服务-执行其中一个即可"><a href="#0x04-重启apache服务-执行其中一个即可" class="headerlink" title="0x04 重启apache服务(执行其中一个即可)"></a>0x04 重启apache服务(执行其中一个即可)</h2><pre><code>systemctl restart httpd
 /etc/init.d/httpd restart
 </code></pre><h2 id="0x05-开放端口，注意把SELinux关闭"><a href="#0x05-开放端口，注意把SELinux关闭" class="headerlink" title="0x05 开放端口，注意把SELinux关闭"></a>0x05 开放端口，注意把SELinux关闭</h2><pre><code>#永久生效加上 --permanent
