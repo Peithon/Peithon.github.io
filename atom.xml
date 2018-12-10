@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://peithon.github.io/"/>
-  <updated>2018-10-13T00:01:43.288Z</updated>
+  <updated>2018-12-10T22:46:21.728Z</updated>
   <id>https://peithon.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>利用frp实现内网穿透</title>
+    <link href="https://peithon.github.io/2018/12/11/frp-test/"/>
+    <id>https://peithon.github.io/2018/12/11/frp-test/</id>
+    <published>2018-12-10T22:42:26.000Z</published>
+    <updated>2018-12-10T22:46:21.728Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="使用frp工具实现内网穿透"><a href="#使用frp工具实现内网穿透" class="headerlink" title="使用frp工具实现内网穿透"></a>使用frp工具实现内网穿透</h1><p>最近在学校内部搭建了一个Web服务环境，想通过公网来访问，所以研究了一下内网穿透，网上有很多方法来实现内网穿透，大多数都是收费的，像<code>ngrok</code>和<code>frp</code>这样的可以自己搭建，所以本着学习的想法，打算自己搭建一个，使用frp工具来实现。<a id="more"></a></p><h2 id="0x01-原理"><a href="#0x01-原理" class="headerlink" title="0x01 原理"></a>0x01 原理</h2><p>一般来说，学习的话就得把原理弄清楚，不然做出来能用以后碰到类似的也就记得不太深，所以这里就要唠叨一下内网穿透的原理了，当然也是从网上<a href="https://zhuanlan.zhihu.com/p/30351943" target="_blank" rel="noopener">大神</a>的文章学习来的。</p><p>公网主机先监听一个端口(<code>8888端口</code>为例)，监听这个端口是用于向外部提供一个HTTP服务。同时其他任意一个端口（这里我们假设为7777），监听这个端口是用于让内网服务器主动连接进来打通一个隧道。接着内网再主动向公网主机的7777发起一个请求，这样内网就成功与公网主机建立了一个连接通道。然后当有任何客户端主动连接公网的<code>8888端口</code>时，公网接收到连接请求之后马上把这连接请求通过先前建立好的隧道转发到内网主机，内网主机接收到来自隧道的数据包后再主动连接内网主机自身的80端口(也可以为自己定义web服务端口)，连接成功之后将数据包原封不动地转发数据包给80端口，待HTTP服务器程序处理完这个数据包，生成了响应报文之后再原路转发回去，最终到达公网的<code>8888端口</code>，然后返回给最开始请求公网服务器<code>8888端口</code>的客户端。</p><h2 id="0x02-前期准备"><a href="#0x02-前期准备" class="headerlink" title="0x02 前期准备"></a>0x02 前期准备</h2><ul><li>公网服务器一个(我使用的是阿里云服务器CentOS7)</li><li>内网服务器一个(我的是Linux系统)</li><li><a href="https://github.com/fatedier/frp/blob/master/README_zh.md" target="_blank" rel="noopener">阅读frp官方文档</a></li><li><a href="https://github.com/fatedier/frp/releases" target="_blank" rel="noopener">frp各版本下载链接</a></li><li>在内网服务器上放一个测试页面（非必须）</li><li>父域名和公网IP绑定</li></ul><h2 id="0x03-服务器端配置-公网ip的服务器上"><a href="#0x03-服务器端配置-公网ip的服务器上" class="headerlink" title="0x03 服务器端配置(公网ip的服务器上)"></a>0x03 服务器端配置(公网ip的服务器上)</h2><h3 id="3-1-GitHub上下载代码"><a href="#3-1-GitHub上下载代码" class="headerlink" title="3.1 GitHub上下载代码"></a>3.1 GitHub上下载代码</h3><pre><code>mkdir /usr/frpcd /usr/frpwget https://github.com/fatedier/frp/releases/download/v0.22.0/frp_0.22.0_linux_amd64.tar.gztar -zxvf frp_0.22.0_linux_amd64.tar.gz </code></pre><h3 id="3-2-修改配置文件"><a href="#3-2-修改配置文件" class="headerlink" title="3.2 修改配置文件"></a>3.2 修改配置文件</h3><p>服务端要使用的文件是<code>frps.ini</code>和<code>frps</code>这两个文件，进入刚刚解压之后的目录</p><pre><code>cat frps.ini[common]bind_port = 7000</code></pre><p>关于<code>frps.ini</code>的完整配置文件参考同级目录下的<code>frps_full.ini</code>或者<a href="https://github.com/fatedier/frp/blob/master/conf/frps_full.ini" target="_blank" rel="noopener">官方文档frps_full.ini</a></p><p>修改配置文件内容：</p><pre><code>vi frps.ini[common]bind_port = 7000# 填写 frp 服务端密码token = 12345678#访问客户端web服务自定义的端口号vhost_http_port = 8888vhost_https_port = 443#dashboard_addr和dashboard_port查看FRPS的仪表盘dashboard_addr = 0.0.0.0dashboard_port = 7500#为基本身份验证面板用户和passwd保护，如果没有设置，包括默认值为admindashboard_user = admindashboard_pwd = admin</code></pre><h2 id="3-3-启动frps"><a href="#3-3-启动frps" class="headerlink" title="3.3     启动frps"></a>3.3     启动frps</h2><h3 id="3-3-1-前端启动"><a href="#3-3-1-前端启动" class="headerlink" title="3.3.1 前端启动"></a>3.3.1 前端启动</h3><pre><code># 使用 -c 参数指定配置文件,使用Ctrl+C终止程序./frps -c frps.ini</code></pre><p>说明启动成功了，但是直接使用这里的命令行来运行是不行的，因为在关掉<code>ssh</code>窗口后程序frps就会停止运行，因此要使用<code>nohup [command] &amp;</code>这种操作来使其在后台运行.</p><h3 id="3-3-2-后台启动"><a href="#3-3-2-后台启动" class="headerlink" title="3.3.2 后台启动"></a>3.3.2 后台启动</h3><pre><code>nohup /usr/frp/frp_0.22.0_linux_amd64/frps -c /usr/frp/frp_0.22.0_linux_amd64/frps.ini &amp;</code></pre><h3 id="3-3-3-停止"><a href="#3-3-3-停止" class="headerlink" title="3.3.3 停止"></a>3.3.3 停止</h3><pre><code>pkill frps</code></pre><h2 id="0x04-客服端配置-内网IP的服务器上"><a href="#0x04-客服端配置-内网IP的服务器上" class="headerlink" title="0x04 客服端配置(内网IP的服务器上)"></a>0x04 客服端配置(内网IP的服务器上)</h2><p>下载对应操作系统的压缩包，然后解压，进入解压后的目录，这里直接写怎么配置，其他的就不细说了。</p><p>主要用到的文件是<code>frpc.ini</code>和<code>frpc</code>,关于<code>frpc.ini</code>的完整配置文件参考同级目录下的<code>frpc_full.ini</code>或者<a href="https://github.com/fatedier/frp/blob/master/conf/frpc_full.ini" target="_blank" rel="noopener">官方文档frps_full.ini</a></p><p>首先查看配置文件默认的配置内容，<code>cat frpc.ini</code></p><pre><code>[common]server_addr = 127.0.0.1   server_port = 7000              [ssh]type = tcp     local_ip = 127.0.0.1local_port = 22    remote_port = 6000   </code></pre><p>在默认的客户端配置文件当中，配置了一个TCP映射，不过我们需要搭建Web服务，因此还需要添加一个HTTP映射，并修改对应的服务端IP地址。</p><p>修改配置文件内容：</p><pre><code>[common]#公网服务器ipserver_addr = 39.106.201.219 #与服务端bind_port一致   server_port = 7000              token = 12345678[ssh]#连接协议type = tcp #内网服务器Ip       local_ip = 10.203.87.22 #ssh默认端口号local_port = 22#自定义的访问内部ssh端口号      remote_port = 6000   [web]#访问协议type = http#内网服务器Ip         local_ip = 10.203.87.22 #内网web服务的端口号local_port = 80 #所绑定的公网服务器域名，一级、二级域名都可以   custom_domains = zyddn.club </code></pre><p>启动客户端<code>./frpc -c frpc.ini</code></p><p><strong>后台启动命令和对应的停止命令与服务端的frp一样</strong></p><h2 id="0x05-测试"><a href="#0x05-测试" class="headerlink" title="0x05 测试"></a>0x05 测试</h2><h3 id="5-1-测试失败，出现错误"><a href="#5-1-测试失败，出现错误" class="headerlink" title="5.1 测试失败，出现错误"></a>5.1 测试失败，出现错误</h3><p>浏览器访问<code>zyddn.club:8888</code>,结果是<code>The page you visit not found</code></p><p>服务端提示： <code>[W] [newhttp.go:209] http: proxy error: no such domain</code></p><p>客户端提示：<code>connect: connection refused</code></p><h3 id="5-2-解决方法"><a href="#5-2-解决方法" class="headerlink" title="5.2 解决方法"></a>5.2 解决方法</h3><p>查看apache有没有启动,这回比较智障，居然忽略了查看服务状态。</p><p>再次访问:</p><pre><code>zyddn.club:8888</code></pre><p>测试结果，回显正常</p><h3 id="5-3-另一种配置方法，其实大致差不多"><a href="#5-3-另一种配置方法，其实大致差不多" class="headerlink" title="5.3 另一种配置方法，其实大致差不多"></a>5.3 另一种配置方法，其实大致差不多</h3><p>服务端：</p><pre><code>[common]bind_port = 5000# 填写 frp 服务端密码token = 12345678#访问客户端web服务自定义的端口号vhost_http_port = 8888vhost_https_port = 3344#dashboard_addr和dashboard_port查看FRPS的仪表盘dashboard_addr = 0.0.0.0dashboard_port = 4000#为基本身份验证面板用户和passwd保护，如果没有设置，包括默认值为admindashboard_user = admindashboard_pwd = admin# 此设置需要配合客户端设置，仅在穿透到内网中的 http 或 https 时有用（可选）# 假设此项设置为 example.com，客户端配置 http 时将 subdomain 设置为 test，# 则你将 test.example.com 解析到服务端后，可以使用此域名来访问客户端对应的 httpsubdomain_host = zyddn.club</code></pre><p>客户端:</p><pre><code>[common]server_addr = 39.106.201.219server_port = 5000token = 12345678[ssh]type = tcplocal_ip = 10.203.87.22local_port = 22remote_port = 6000[web]type = httplocal_ip = 10.203.87.22local_port = 80subdomain = test</code></pre><p>访问:</p><pre><code>test.zyddn.club:8888</code></pre><p>测试结果，回显正常</p><h2 id="0x06-总结"><a href="#0x06-总结" class="headerlink" title="0x06 总结"></a>0x06 总结</h2><p>关于apache没开启那件事我觉得需要解释一下，因为我之前测试内网穿透的时候是开了的，完全没有想到是apache的问题啊，天地良心，话说，这此的内网穿透实践的确学到新的东西了，感觉人生又充满了活力,这是一条不正经的总结。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;使用frp工具实现内网穿透&quot;&gt;&lt;a href=&quot;#使用frp工具实现内网穿透&quot; class=&quot;headerlink&quot; title=&quot;使用frp工具实现内网穿透&quot;&gt;&lt;/a&gt;使用frp工具实现内网穿透&lt;/h1&gt;&lt;p&gt;最近在学校内部搭建了一个Web服务环境，想通过公网来访问，所以研究了一下内网穿透，网上有很多方法来实现内网穿透，大多数都是收费的，像&lt;code&gt;ngrok&lt;/code&gt;和&lt;code&gt;frp&lt;/code&gt;这样的可以自己搭建，所以本着学习的想法，打算自己搭建一个，使用frp工具来实现。
+    
+    </summary>
+    
+      <category term="Linux" scheme="https://peithon.github.io/categories/Linux/"/>
+    
+    
+      <category term="内网穿透" scheme="https://peithon.github.io/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"/>
+    
+      <category term="frp" scheme="https://peithon.github.io/tags/frp/"/>
+    
+  </entry>
   
   <entry>
     <title>apache虚拟主机配置-基于端口</title>
